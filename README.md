@@ -1,1275 +1,1273 @@
-# App4KITAs Dashboard - Complete Functionality Documentation
+# App4KITAs Dashboard - Vollständige Funktionalitäts-Dokumentation
 
-**Last Updated: January 2025**  
-**Based on: Actual Code Analysis**
+**Letzte Aktualisierung: October 2025**  
 
 ---
 
-## 📋 Table of Contents
+## 📋 Inhaltsverzeichnis
 
-- [Overview](#overview)
-- [Admin Dashboard Pages](#admin-dashboard-pages)
-- [Educator Dashboard Pages](#educator-dashboard-pages)
-- [Super Admin Dashboard Pages](#super-admin-dashboard-pages)
-- [Träger Admin Dashboard Pages](#träger-admin-dashboard-pages)
-- [Shared Components](#shared-components)
+- [Übersicht](#übersicht)
+- [Super Admin Dashboard Seiten](#super-admin-dashboard-seiten)
+- [Träger Admin Dashboard Seiten](#träger-admin-dashboard-seiten)
+- [Admin Dashboard Seiten](#admin-dashboard-seiten)
+- [Educator Dashboard Seiten](#educator-dashboard-seiten)
+- [Gemeinsame Komponenten](#gemeinsame-komponenten)
 - [API Services](#api-services)
 
 ---
 
-## Overview
+## Übersicht
 
-The App4KITAs Dashboard is a React-based web application with role-based access control. The dashboard consists of **29 pages** across 4 user roles, with comprehensive functionality for managing kindergartens, children, staff, and communications.
+Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierter Zugriffskontrolle. Das Dashboard besteht aus **29 Seiten** über 4 Benutzerrollen hinweg, mit umfassender Funktionalität zur Verwaltung von Kindertagesstätten, Kindern, Personal und Kommunikation.
 
-### Role Summary
+### Rollen-Übersicht
 
-| Role | Pages | Description |
+| Rolle | Seiten | Beschreibung |
 |------|-------|-------------|
-| **ADMIN** | 11 pages | Institution-level management |
-| **EDUCATOR** | 5 pages | Daily operations and child care |
-| **SUPER_ADMIN** | 8 pages | Platform-wide administration |
-| **TRAGER_ADMIN** | 5 pages | Organization-level management |
+| **SUPER_ADMIN** | 8 Seiten | Plattform-weite Administration |
+| **TRAGER_ADMIN** | 5 Seiten | Organisationsebene-Verwaltung |
+| **ADMIN** | 11 Seiten | Institutionsebene-Verwaltung |
+| **EDUCATOR** | 5 Seiten | Tägliche Betriebsabläufe und Kinderbetreuung |
 
-**Total: 29 pages**
+**Gesamt: 29 Seiten**
 
 ---
 
-## Admin Dashboard Pages
+## Super Admin Dashboard Seiten
+
+### 1. Dashboard (`/super-admin/dashboard`)
+
+**Datei:** `pages/super_admin/Dashboard.tsx`
+
+**Funktionalität:**
+- **Plattform-Statistiken:**
+  - Gesamtanzahl Träger (Organisationen)
+  - Gesamtanzahl Institutionen
+  - Gesamtanzahl Benutzer (alle Rollen)
+  - Aktive Benutzer
+  - Inaktive Benutzer
+
+- **Schnellzugriffe:**
+  - Träger-Verwaltung
+  - Institutionen-Verwaltung
+  - Statistiken
+  - Berichte
+  - Erzieher-Verwaltung
+  - Eltern-Verwaltung
+  - GDPR-Compliance
+
+- **Aktivitätsprotokoll:**
+  - Aktuelle Plattform-Aktivitäten
+  - System-weite Ereignisse
+  - Aktivitäts-Zeitstrahl
+
+- **Persönliches Notizbuch:**
+  - Private Notizen für Super Admin
+
+**API-Aufrufe:**
+- `getSuperAdminStats()` - Plattform-Statistiken
+- Aktivitätsprotokoll-Abruf
+
+---
+
+### 2. Träger-Verwaltung (`/super-admin/traeger`)
+
+**Datei:** `pages/super_admin/Traeger.tsx`
+
+**Funktionalität:**
+- **Träger CRUD:**
+  - Träger (Organisation) erstellen
+  - Träger-Informationen bearbeiten
+  - Träger löschen
+  - Träger-Details anzeigen
+
+- **Träger-Informationen:**
+  - Name
+  - Adresse
+  - Kontakt-E-Mail
+  - Kontakt-Telefon
+  - Erstellt von (Super Admin)
+  - Erstellungsdatum
+
+- **Träger-Admin-Verwaltung:**
+  - Träger-Admin-Benutzer erstellen
+  - Träger-Admin-Informationen bearbeiten
+  - Träger-Admin löschen
+  - Träger-Admin einem Träger zuweisen
+  - Alle Träger-Admins anzeigen
+
+- **Träger-Admin-Informationen:**
+  - Name, E-Mail
+  - Passwort-Verwaltung
+  - Träger-Zuordnung
+  - Status (aktiv/inaktiv)
+  - Letzter Login
+
+- **Suche & Filter:**
+  - Träger nach Name suchen
+  - Träger-Admins suchen
+  - Paginierung
+
+**API-Aufrufe:**
+- `getAllTraeger()` - Alle Träger auflisten
+- `createTraeger()` - Träger erstellen
+- `updateTraeger()` - Träger aktualisieren
+- `deleteTraeger()` - Träger löschen
+- `getAllTraegerAdmins()` - Alle Träger-Admins auflisten
+- `createTraegerAdmin()` - Träger-Admin erstellen
+- `updateTraegerAdmin()` - Träger-Admin aktualisieren
+- `deleteTraegerAdmin()` - Träger-Admin löschen
+- `fetchAllUsers()` - Alle Benutzer abrufen
+- `updateUserStatus()` - Benutzerstatus aktualisieren
+
+---
+
+### 3. Institutionen (`/super-admin/institutionen`)
+
+**Datei:** `pages/super_admin/Institutionen.tsx`
+
+**Funktionalität:**
+- **Institution CRUD:**
+  - Institution erstellen
+  - Institution bearbeiten
+  - Institution löschen
+  - Institutions-Details anzeigen
+
+- **Institutions-Informationen:**
+  - Name, Adresse
+  - Träger-Zuordnung (erforderlich)
+  - Öffnungszeiten
+  - Kontaktinformationen
+  - Einstellungen
+
+- **Institutions-Statistiken:**
+  - Anzahl Kinder
+  - Anzahl Gruppen
+  - Anzahl Erzieher
+  - Aktivitäts-Metriken
+
+- **Suche & Filter:**
+  - Nach Name suchen
+  - Nach Träger filtern
+  - Paginierung
+
+**API-Aufrufe:**
+- Institutions-Verwaltungs-APIs
+- Statistiken-APIs
+
+---
+
+### 4. Statistiken (`/super-admin/statistiken`)
+
+**Datei:** `pages/super_admin/Statistiken.tsx`
+
+**Funktionalität:**
+- **Plattform-weite Statistiken:**
+  - Benutzerwachstum über Zeit
+  - Aktive Benutzer
+  - Check-in-Trends
+  - Nachrichten-Volumen
+  - Benachrichtigungs-Statistiken
+  - Fehlgeschlagene Logins
+  - Gruppen-Anwesenheit
+  - Check-in-Methoden
+
+- **Diagramme & Visualisierungen:**
+  - Benutzerwachstums-Diagramme
+  - Aktivitäts-Trends
+  - Plattform-weite Metriken
+  - Vergleichende Analysen
+
+- **Datumsbereich-Filterung:**
+  - Benutzerdefinierte Datumsbereiche
+  - Zeitraum-Auswahl
+  - Export-Funktionen
+
+**API-Aufrufe:**
+- `getSuperAdminStats()` - Plattform-Statistiken
+- Verschiedene Analytics-APIs
+
+---
+
+### 5. Berichte (`/super-admin/reports`)
+
+**Datei:** `pages/super_admin/Reports.tsx`
+
+**Funktionalität:**
+- **Plattform-Berichte:**
+  - Benutzerwachstums-Bericht
+  - Aktive Benutzer-Bericht
+  - Check-in-Trends-Bericht
+  - Aktive Gruppen-Bericht
+  - Nachrichten-Volumen-Bericht
+  - Benachrichtigungs-Statistiken-Bericht
+  - Fehlgeschlagene Logins-Bericht
+  - Gruppen-Anwesenheits-Bericht
+  - Check-in-Methoden-Bericht
+  - Plattform-Statistiken-Bericht
+
+- **Export-Funktionen:**
+  - CSV-Export
+  - PDF-Export
+  - Massen-Export
+
+**API-Aufrufe:**
+- Plattform-Berichts-APIs aus `reportApi.ts`
+
+---
+
+### 6. Erzieher (`/super-admin/educators`)
+
+**Datei:** `pages/super_admin/Educators.tsx`
+
+**Funktionalität:**
+- **Plattform-weite Erzieher-Verwaltung:**
+  - Alle Erzieher über alle Institutionen hinweg anzeigen
+  - Erzieher-Details
+  - Institutions-Zuordnung
+  - Status-Verfolgung
+
+- **Erzieher-Informationen:**
+  - Name, E-Mail, Telefon
+  - Institution
+  - Gruppen
+  - Status (aktiv/inaktiv)
+  - Letzter Login
+
+- **Suche & Filter:**
+  - Nach Name/E-Mail suchen
+  - Nach Institution filtern
+  - Nach Status filtern
+  - Paginierung
+
+**API-Aufrufe:**
+- Plattform-weite Benutzer-APIs
+
+---
+
+### 7. Eltern (`/super-admin/parents`)
+
+**Datei:** `pages/super_admin/Parents.tsx`
+
+**Funktionalität:**
+- **Plattform-weite Eltern-Verwaltung:**
+  - Alle Eltern über alle Institutionen hinweg anzeigen
+  - Eltern-Details
+  - Kinder-Zuordnungen
+  - Status-Verfolgung
+
+- **Eltern-Informationen:**
+  - Name, E-Mail, Telefon
+  - Institution
+  - Kinder
+  - Status (aktiv/inaktiv)
+  - Letzter Login
+
+- **Suche & Filter:**
+  - Nach Name/E-Mail suchen
+  - Nach Institution filtern
+  - Nach Status filtern
+  - Paginierung
+
+**API-Aufrufe:**
+- Plattform-weite Benutzer-APIs
+
+---
+
+### 8. GDPR-Compliance (`/super-admin/gdpr`)
+
+**Datei:** `pages/super_admin/GDPRCompliancePage.tsx`
+
+**Funktionalität:**
+- **GDPR-Dashboard:**
+  - Audit-Protokolle
+  - Ausstehende Löschungen
+  - Datenaufbewahrungs-Verwaltung
+  - Compliance-Berichte
+
+- **Datenverwaltung:**
+  - Datenexport-Anfragen
+  - Löschungs-Anfragen
+  - Anonymisierung
+  - Tiefenbereinigung
+
+- **Compliance-Tools:**
+  - Einwilligungs-Verfolgung
+  - Datenaufbewahrungs-Fristen
+  - Audit-Trail
+  - Compliance-Berichte
+
+**API-Aufrufe:**
+- GDPR-Verwaltungs-APIs aus `gdprApi.ts`
+
+---
+
+## Träger Admin Dashboard Seiten
+
+### 1. Dashboard (`/traeger-admin/dashboard`)
+
+**Datei:** `pages/traeger_admin/Dashboard.tsx`
+
+**Funktionalität:**
+- **Träger-Statistiken:**
+  - Gesamtanzahl Kinder (Träger-weit)
+  - Kinder >8h Anwesenheit
+  - Gesamtanzahl Erzieher
+  - Gesamtanzahl Institutionen
+  - Inaktive Benutzer (letzte 4 Wochen)
+  - Fehlgeschlagene Logins (letzte 30 Tage)
+
+- **Schnellzugriffe:**
+  - Einrichtungen-Verwaltung
+  - Statistiken
+  - Benutzer-Verwaltung
+  - Einstellungen
+
+- **Warnungen:**
+  - Inaktive Benutzer-Warnung
+  - Fehlgeschlagene Login-Warnungen
+  - Sicherheits-Benachrichtigungen
+
+**API-Aufrufe:**
+- `getTraegerStats()` - Träger-Statistiken
+- `getInactiveUsers()` - Inaktive Benutzer
+- `getFailedLogins()` - Fehlgeschlagene Logins
+
+---
+
+### 2. Einrichtungen (`/traeger-admin/einrichtungen`)
+
+**Datei:** `pages/traeger_admin/Einrichtungen.tsx`
+
+**Funktionalität:**
+- **Institutions-Verwaltung (Träger-weit):**
+  - Alle Institutionen im Träger anzeigen
+  - Neue Institution erstellen
+  - Institution bearbeiten
+  - Institution löschen
+  - Institutions-Details anzeigen
+
+- **Institutions-Informationen:**
+  - Name, Adresse
+  - Kontaktinformationen
+  - Einstellungen
+  - Statistiken pro Institution
+
+- **Institutions-Statistiken:**
+  - Anzahl Kinder pro Institution
+  - Anzahl Erzieher pro Institution
+  - Aktivitäts-Metriken
+
+- **Suche & Filter:**
+  - Nach Name suchen
+  - Paginierung
+
+**API-Aufrufe:**
+- Träger Admin Institutions-APIs
+
+---
+
+### 3. Statistiken (`/traeger-admin/statistiken`)
+
+**Datei:** `pages/traeger_admin/Statistiken.tsx`
+
+**Funktionalität:**
+- **Träger-weite Statistiken:**
+  - Gesamtanzahl Kinder (alle Institutionen)
+  - Kinder >8h (alle Institutionen)
+  - Gesamtanzahl Erzieher
+  - Pro-Institution Aufschlüsselung
+  - Inaktive Benutzer
+  - Fehlgeschlagene Logins
+
+- **Diagramme & Visualisierungen:**
+  - Träger-weite Trends
+  - Pro-Institution Vergleich
+  - Aktivitäts-Diagramme
+
+- **Datumsbereich-Filterung:**
+  - Benutzerdefinierte Datumsbereiche
+  - Export-Funktionen
+
+**API-Aufrufe:**
+- Träger Admin Statistiken-APIs
+
+---
+
+### 4. Benutzer (`/traeger-admin/benutzer`)
+
+**Datei:** `pages/traeger_admin/Benutzer.tsx`
+
+**Funktionalität:**
+- **Benutzer-Verwaltung (Träger-weit):**
+  - Alle Admins und Erzieher im Träger anzeigen
+  - Neue Benutzer erstellen (Admin, Erzieher)
+  - Benutzer-Informationen bearbeiten
+  - Benutzer löschen
+  - Benutzer sperren/entsperren
+
+- **Benutzer-Informationen:**
+  - Name, E-Mail, Telefon
+  - Rolle (ADMIN, EDUCATOR)
+  - Institutions-Zuordnung
+  - Status (aktiv/inaktiv)
+  - Letzter Login
+
+- **Benutzer-Funktionen:**
+  - Passwort-Verwaltung
+  - Status-Updates
+  - Sperren/Entsperren-Funktionalität
+  - Inaktive Benutzer-Identifikation
+
+- **Suche & Filter:**
+  - Nach Name/E-Mail suchen
+  - Nach Rolle filtern
+  - Nach Institution filtern
+  - Nach Status filtern
+  - Paginierung
+
+**Hinweis:** Eltern können nicht vom Träger-Admin verwaltet werden
+
+**API-Aufrufe:**
+- Träger Admin Benutzer-Verwaltungs-APIs
+
+---
+
+### 5. Einstellungen (`/traeger-admin/einstellungen`)
+
+**Datei:** `pages/traeger_admin/Einstellungen.tsx`
+
+**Funktionalität:**
+- **Träger-Einstellungen:**
+  - Träger-Informationen
+  - Kontaktdaten
+  - Einstellungs-Konfiguration
+  - (Platzhalter für zukünftige Features)
+
+**API-Aufrufe:**
+- Träger-Einstellungs-APIs
+
+---
+
+## Admin Dashboard Seiten
 
 ### 1. Dashboard (`/admin/dashboard`)
 
-**File:** `pages/admin/Dashboard.tsx`
+**Datei:** `pages/admin/Dashboard.tsx`
 
-**Functionality:**
-- **Statistics Overview:**
-  - Total children count
-  - Total groups count
-  - Total educators count
-  - Today's check-ins count
-  - Pending check-ins (children not checked in)
-  - Recent activity feed
-  - Quick access cards to key features
+**Funktionalität:**
+- **Statistik-Übersicht:**
+  - Gesamtanzahl Kinder
+  - Gesamtanzahl Gruppen
+  - Gesamtanzahl Erzieher
+  - Heutige Check-ins
+  - Ausstehende Check-ins (Kinder noch nicht eingecheckt)
+  - Aktuelle Aktivitäts-Feed
+  - Schnellzugriffs-Karten zu wichtigen Funktionen
 
-- **Quick Links:**
-  - Children Management
-  - Groups Management
-  - Staff Management
-  - Statistics
-  - Reports
-  - Calendar & Events
-  - Communications
+- **Schnellzugriffe:**
+  - Kinder-Verwaltung
+  - Gruppen-Verwaltung
+  - Personal-Verwaltung
+  - Statistiken
+  - Berichte
+  - Kalender & Veranstaltungen
+  - Kommunikation
   - Chat
 
-- **Personal Notebook:**
-  - Private notes for admin
-  - Persistent storage
-  - Quick access from dashboard
+- **Persönliches Notizbuch:**
+  - Private Notizen für Admin
+  - Persistente Speicherung
+  - Schnellzugriff vom Dashboard
 
-- **Recent Activity:**
-  - Last check-ins/outs
-  - Recent updates
-  - Activity timeline
+- **Aktuelle Aktivitäten:**
+  - Letzte Check-ins/outs
+  - Aktuelle Updates
+  - Aktivitäts-Zeitstrahl
 
-**API Calls:**
-- `getAdminStats()` - Dashboard statistics
-- Activity log retrieval
-
----
-
-### 2. Children Management (`/admin/children`)
-
-**File:** `pages/admin/Children.tsx`
-
-**Functionality:**
-- **CRUD Operations:**
-  - Create new child with full profile
-  - Edit child information
-  - Delete child (soft delete)
-  - View child details
-
-- **Child Profile Fields:**
-  - Name, birth date
-  - Photo upload and management
-  - Allergies and medical conditions
-  - Emergency contact information
-  - Group assignment
-  - Parent assignments (multiple parents)
-  - Consent management (photo, data processing, marketing)
-
-- **QR Code Management:**
-  - Generate QR code for individual child
-  - Bulk QR code generation for multiple children
-  - QR code PDF export
-  - QR code printing status tracking
-  - Regenerate QR codes
-
-- **Photo Management:**
-  - Upload child photos
-  - Photo preview
-  - Photo deletion
-
-- **Parent Management:**
-  - Assign multiple parents to child
-  - Remove parent assignments
-  - View parent information
-
-- **Search & Filter:**
-  - Search by name
-  - Filter by group
-  - Filter by consent status
-  - Pagination support
-
-**API Calls:**
-- `fetchChildren()` - List all children
-- `addChild()` - Create child
-- `editChild()` - Update child
-- `deleteChild()` - Delete child
-- `fetchChildQRCode()` - Get QR code
-- `uploadChildPhoto()` - Upload photo
-- `fetchGroups()` - Get groups for assignment
-- `fetchParents()` - Get parents for assignment
+**API-Aufrufe:**
+- `getAdminStats()` - Dashboard-Statistiken
+- Aktivitätsprotokoll-Abruf
 
 ---
 
-### 3. Groups Management (`/admin/groups`)
+### 2. Kinder-Verwaltung (`/admin/children`)
 
-**File:** `pages/admin/Groups.tsx`
+**Datei:** `pages/admin/Children.tsx`
 
-**Functionality:**
-- **CRUD Operations:**
-  - Create new group
-  - Edit group information
-  - Delete group
-  - View group details
+**Funktionalität:**
+- **CRUD-Operationen:**
+  - Neues Kind mit vollständigem Profil erstellen
+  - Kind-Informationen bearbeiten
+  - Kind löschen (Soft Delete)
+  - Kind-Details anzeigen
 
-- **Group Information:**
-  - Group name
-  - Group description
-  - Institution association
+- **Kind-Profil-Felder:**
+  - Name, Geburtsdatum
+  - Foto-Upload und -Verwaltung
+  - Allergien und medizinische Bedingungen
+  - Notfallkontakt-Informationen
+  - Gruppen-Zuordnung
+  - Eltern-Zuordnungen (mehrere Eltern)
+  - Einwilligungs-Verwaltung (Foto, Datenverarbeitung, Marketing)
 
-- **Educator Assignment:**
-  - Assign multiple educators to group
-  - Remove educator from group
-  - View assigned educators
-  - Educator count per group
+- **QR-Code-Verwaltung:**
+  - QR-Code für einzelnes Kind generieren
+  - Bulk-QR-Code-Generierung für mehrere Kinder
+  - QR-Code PDF-Export
+  - QR-Code Druck-Status-Verfolgung
+  - QR-Codes neu generieren
 
-- **Child Assignment:**
-  - View children in group
-  - Child count per group
-  - (Child assignment managed in Children page)
+- **Foto-Verwaltung:**
+  - Kinderfotos hochladen
+  - Foto-Vorschau
+  - Foto-Löschung
 
-- **Group Statistics:**
-  - Number of children
-  - Number of educators
-  - Group activity status
+- **Eltern-Verwaltung:**
+  - Mehrere Eltern einem Kind zuweisen
+  - Eltern-Zuordnungen entfernen
+  - Eltern-Informationen anzeigen
 
-- **Search & Filter:**
-  - Search by name
-  - Pagination support
+- **Suche & Filter:**
+  - Nach Name suchen
+  - Nach Gruppe filtern
+  - Nach Einwilligungs-Status filtern
+  - Paginierung
 
-**API Calls:**
-- `fetchGroups()` - List all groups
-- `addGroup()` - Create group
-- `editGroup()` - Update group
-- `deleteGroup()` - Delete group
-- `fetchEducators()` - Get educators for assignment
-- `assignEducators()` - Assign educators to group
-- `updateGroupEducators()` - Update educator assignments
-
----
-
-### 4. Staff Management (`/admin/personal`)
-
-**File:** `pages/admin/Personal.tsx`
-
-**Functionality:**
-- **CRUD Operations:**
-  - Create new educator/staff member
-  - Edit staff information
-  - Delete staff member
-  - View staff details
-
-- **Staff Profile Fields:**
-  - Name, email, phone
-  - Role (EDUCATOR, ADMIN)
-  - Status (active, inactive, suspended)
-  - Group assignments
-  - Last login timestamp
-  - Avatar upload
-
-- **Status Management:**
-  - Activate/deactivate staff
-  - Suspend staff accounts
-  - Status badges with visual indicators
-
-- **Password Management:**
-  - Change educator password (admin function)
-  - Password reset capability
-
-- **Group Assignment:**
-  - Assign staff to groups
-  - View group memberships
-  - Multiple group assignments
-
-- **Activity Tracking:**
-  - Last login time
-  - Account status history
-  - Activity indicators
-
-- **Search & Filter:**
-  - Search by name or email
-  - Filter by role
-  - Filter by status
-  - Pagination support
-
-**API Calls:**
-- `fetchEducators()` - List all educators
-- `addEducator()` - Create educator
-- `editEducator()` - Update educator
-- `deleteEducator()` - Delete educator
-- `changeEducatorPassword()` - Change password
-- `updateUserStatus()` - Update status
-- `fetchGroups()` - Get groups for assignment
+**API-Aufrufe:**
+- `fetchChildren()` - Alle Kinder auflisten
+- `addChild()` - Kind erstellen
+- `editChild()` - Kind aktualisieren
+- `deleteChild()` - Kind löschen
+- `fetchChildQRCode()` - QR-Code abrufen
+- `uploadChildPhoto()` - Foto hochladen
+- `fetchGroups()` - Gruppen für Zuordnung abrufen
+- `fetchParents()` - Eltern für Zuordnung abrufen
 
 ---
 
-### 5. Statistics (`/admin/statistiken`)
+### 3. Gruppen-Verwaltung (`/admin/groups`)
 
-**File:** `pages/admin/Statistiken.tsx`
+**Datei:** `pages/admin/Groups.tsx`
 
-**Functionality:**
-- **Overview Statistics:**
-  - Total children
-  - Total groups
-  - Total educators
-  - Today's check-ins
-  - Children >8h attendance
-  - Recent activity count
+**Funktionalität:**
+- **CRUD-Operationen:**
+  - Neue Gruppe erstellen
+  - Gruppen-Informationen bearbeiten
+  - Gruppe löschen
+  - Gruppen-Details anzeigen
 
-- **Charts & Visualizations:**
-  - 7-day attendance trend (Line chart)
-  - Group-wise attendance (Bar chart)
-  - Check-in/out patterns (Area chart)
-  - Time-based analytics
+- **Gruppen-Informationen:**
+  - Gruppenname
+  - Gruppenbeschreibung
+  - Institutions-Zuordnung
 
-- **Group Statistics:**
-  - Per-group attendance rates
-  - Group performance metrics
-  - Group comparison charts
+- **Erzieher-Zuordnung:**
+  - Mehrere Erzieher einer Gruppe zuweisen
+  - Erzieher aus Gruppe entfernen
+  - Zugewiesene Erzieher anzeigen
+  - Erzieher-Anzahl pro Gruppe
 
-- **Check-in Statistics:**
-  - Daily check-in counts
-  - Check-in methods (QR vs Manual)
-  - Check-in time distribution
-  - Late arrivals tracking
+- **Kinder-Zuordnung:**
+  - Kinder in Gruppe anzeigen
+  - Kinder-Anzahl pro Gruppe
+  - (Kinder-Zuordnung wird auf Kinder-Seite verwaltet)
 
-- **Real-time Updates:**
-  - Live statistics refresh
-  - Date range filtering
-  - Export capabilities
+- **Gruppen-Statistiken:**
+  - Anzahl Kinder
+  - Anzahl Erzieher
+  - Gruppen-Aktivitäts-Status
 
-**API Calls:**
-- `getAdminStats()` - Overall statistics
-- `fetchCheckinStats()` - Check-in statistics
-- `fetchGroups()` - Group data for charts
+- **Suche & Filter:**
+  - Nach Name suchen
+  - Paginierung
 
----
-
-### 6. Reports (`/admin/reports`)
-
-**File:** `pages/admin/Reports.tsx`
-
-**Report Types (8 Total):**
-
-#### 6.1 Daily Report (`DailyReport.tsx`)
-- Today's attendance summary
-- Check-ins/outs for the day
-- Late arrivals
-- Late pickups
-- Absences
-- CSV/PDF export
-
-#### 6.2 Monthly Report (`MonthlyReport.tsx`)
-- Monthly attendance trends
-- Monthly statistics
-- Comparison with previous month
-- Group performance
-- CSV/PDF export
-
-#### 6.3 Custom Range Report (`CustomRangeReport.tsx`)
-- Custom date range selection
-- Attendance for selected period
-- Detailed analytics
-- Export functionality
-
-#### 6.4 Late Arrivals Report (`LateArrivalsReport.tsx`)
-- Children arriving late
-- Late arrival patterns
-- Time analysis
-- Frequency tracking
-
-#### 6.5 Late Pickups Report (`LatePickupsReport.tsx`)
-- Children picked up late
-- Late pickup patterns
-- Time analysis
-- Parent notification tracking
-
-#### 6.6 Absence Patterns Report (`AbsencePatternsReport.tsx`)
-- Absence trends
-- Pattern recognition
-- Frequency analysis
-- Group comparisons
-
-#### 6.7 Group Performance Report (`GroupPerformanceReport.tsx`)
-- Per-group statistics
-- Group comparisons
-- Performance metrics
-- Attendance rates
-
-#### 6.8 Time Analytics Report (`TimeAnalyticsReport.tsx`)
-- Time-based analytics
-- Check-in time distribution
-- Duration analysis
-- Peak time identification
-
-**Common Features:**
-- Tab-based report selector
-- Date range filtering
-- CSV export
-- PDF export
-- Print functionality
-- Report descriptions and help text
-
-**API Calls:**
-- Various report-specific API endpoints from `reportApi.ts`
+**API-Aufrufe:**
+- `fetchGroups()` - Alle Gruppen auflisten
+- `addGroup()` - Gruppe erstellen
+- `editGroup()` - Gruppe aktualisieren
+- `deleteGroup()` - Gruppe löschen
+- `fetchEducators()` - Erzieher für Zuordnung abrufen
+- `assignEducators()` - Erzieher Gruppe zuweisen
+- `updateGroupEducators()` - Erzieher-Zuordnungen aktualisieren
 
 ---
 
-### 7. Calendar & Events (`/admin/events`)
+### 4. Personal-Verwaltung (`/admin/personal`)
 
-**File:** `pages/admin/Events.tsx`
+**Datei:** `pages/admin/Personal.tsx`
 
-**Functionality:**
-- **Event Management:**
-  - Create events with full details
-  - Edit events
-  - Delete events
-  - View event details
+**Funktionalität:**
+- **CRUD-Operationen:**
+  - Neuen Erzieher/Mitarbeiter erstellen
+  - Mitarbeiter-Informationen bearbeiten
+  - Mitarbeiter löschen
+  - Mitarbeiter-Details anzeigen
 
-- **Event Information:**
-  - Title, description
-  - Date and time
-  - Location
-  - Group assignments
-  - RSVP tracking
+- **Mitarbeiter-Profil-Felder:**
+  - Name, E-Mail, Telefon
+  - Rolle (EDUCATOR, ADMIN)
+  - Status (aktiv, inaktiv, gesperrt)
+  - Gruppen-Zuordnungen
+  - Letzter Login Zeitstempel
+  - Avatar-Upload
 
-- **View Modes:**
-  - **Calendar View:**
-    - Monthly calendar display
-    - Event markers on dates
-    - Click to view event details
-    - Navigation (previous/next month)
+- **Status-Verwaltung:**
+  - Mitarbeiter aktivieren/deaktivieren
+  - Mitarbeiter-Konten sperren
+  - Status-Badges mit visuellen Indikatoren
+
+- **Passwort-Verwaltung:**
+  - Erzieher-Passwort ändern (Admin-Funktion)
+  - Passwort-Reset-Funktionalität
+
+- **Gruppen-Zuordnung:**
+  - Mitarbeiter Gruppen zuweisen
+  - Gruppen-Mitgliedschaften anzeigen
+  - Mehrfache Gruppen-Zuordnungen
+
+- **Aktivitäts-Verfolgung:**
+  - Letzte Login-Zeit
+  - Konto-Status-Historie
+  - Aktivitäts-Indikatoren
+
+- **Suche & Filter:**
+  - Nach Name oder E-Mail suchen
+  - Nach Rolle filtern
+  - Nach Status filtern
+  - Paginierung
+
+**API-Aufrufe:**
+- `fetchEducators()` - Alle Erzieher auflisten
+- `addEducator()` - Erzieher erstellen
+- `editEducator()` - Erzieher aktualisieren
+- `deleteEducator()` - Erzieher löschen
+- `changeEducatorPassword()` - Passwort ändern
+- `updateUserStatus()` - Status aktualisieren
+- `fetchGroups()` - Gruppen für Zuordnung abrufen
+
+---
+
+### 5. Statistiken (`/admin/statistiken`)
+
+**Datei:** `pages/admin/Statistiken.tsx`
+
+**Funktionalität:**
+- **Übersichts-Statistiken:**
+  - Gesamtanzahl Kinder
+  - Gesamtanzahl Gruppen
+  - Gesamtanzahl Erzieher
+  - Heutige Check-ins
+  - Kinder >8h Anwesenheit
+  - Aktuelle Aktivitäts-Anzahl
+
+- **Diagramme & Visualisierungen:**
+  - 7-Tage-Anwesenheits-Trend (Liniendiagramm)
+  - Gruppen-weise Anwesenheit (Balkendiagramm)
+  - Check-in/out-Muster (Flächendiagramm)
+  - Zeitbasierte Analysen
+
+- **Gruppen-Statistiken:**
+  - Pro-Gruppe Anwesenheitsraten
+  - Gruppen-Leistungs-Metriken
+  - Gruppen-Vergleichs-Diagramme
+
+- **Check-in-Statistiken:**
+  - Tägliche Check-in-Anzahlen
+  - Check-in-Methoden (QR vs. Manuell)
+  - Check-in-Zeit-Verteilung
+  - Verspätungs-Verfolgung
+
+- **Echtzeit-Updates:**
+  - Live-Statistik-Aktualisierung
+  - Datumsbereich-Filterung
+  - Export-Funktionen
+
+**API-Aufrufe:**
+- `getAdminStats()` - Gesamt-Statistiken
+- `fetchCheckinStats()` - Check-in-Statistiken
+- `fetchGroups()` - Gruppendaten für Diagramme
+
+---
+
+### 6. Berichte (`/admin/reports`)
+
+**Datei:** `pages/admin/Reports.tsx`
+
+**Berichtstypen (8 insgesamt):**
+
+#### 6.1 Tagesbericht (`DailyReport.tsx`)
+- Heutige Anwesenheits-Zusammenfassung
+- Check-ins/outs für den Tag
+- Verspätete Ankünfte
+- Verspätete Abholungen
+- Abwesenheiten
+- CSV/PDF-Export
+
+#### 6.2 Monatsbericht (`MonthlyReport.tsx`)
+- Monatliche Anwesenheits-Trends
+- Monatliche Statistiken
+- Vergleich mit Vormonat
+- Gruppen-Leistung
+- CSV/PDF-Export
+
+#### 6.3 Benutzerdefinierter Bereichs-Bericht (`CustomRangeReport.tsx`)
+- Benutzerdefinierte Datumsbereich-Auswahl
+- Anwesenheit für ausgewählten Zeitraum
+- Detaillierte Analysen
+- Export-Funktionalität
+
+#### 6.4 Verspätete Ankünfte-Bericht (`LateArrivalsReport.tsx`)
+- Verspätet ankommende Kinder
+- Verspätungs-Muster
+- Zeitanalyse
+- Häufigkeits-Verfolgung
+
+#### 6.5 Verspätete Abholungen-Bericht (`LatePickupsReport.tsx`)
+- Verspätet abgeholte Kinder
+- Verspätungs-Muster
+- Zeitanalyse
+- Eltern-Benachrichtigungs-Verfolgung
+
+#### 6.6 Abwesenheits-Muster-Bericht (`AbsencePatternsReport.tsx`)
+- Abwesenheits-Trends
+- Mustererkennung
+- Häufigkeits-Analyse
+- Gruppen-Vergleiche
+
+#### 6.7 Gruppen-Leistungs-Bericht (`GroupPerformanceReport.tsx`)
+- Pro-Gruppe Statistiken
+- Gruppen-Vergleiche
+- Leistungs-Metriken
+- Anwesenheitsraten
+
+#### 6.8 Zeit-Analytik-Bericht (`TimeAnalyticsReport.tsx`)
+- Zeitbasierte Analysen
+- Check-in-Zeit-Verteilung
+- Dauer-Analyse
+- Spitzenzeit-Identifikation
+
+**Gemeinsame Features:**
+- Tab-basierter Berichts-Auswähler
+- Datumsbereich-Filterung
+- CSV-Export
+- PDF-Export
+- Druck-Funktionalität
+- Berichts-Beschreibungen und Hilfetext
+
+**API-Aufrufe:**
+- Verschiedene berichtsspezifische API-Endpunkte aus `reportApi.ts`
+
+---
+
+### 7. Kalender & Veranstaltungen (`/admin/events`)
+
+**Datei:** `pages/admin/Events.tsx`
+
+**Funktionalität:**
+- **Veranstaltungs-Verwaltung:**
+  - Veranstaltungen mit vollständigen Details erstellen
+  - Veranstaltungen bearbeiten
+  - Veranstaltungen löschen
+  - Veranstaltungs-Details anzeigen
+
+- **Veranstaltungs-Informationen:**
+  - Titel, Beschreibung
+  - Datum und Uhrzeit
+  - Ort
+  - Gruppen-Zuordnungen
+  - RSVP-Verfolgung
+
+- **Ansichts-Modi:**
+  - **Kalender-Ansicht:**
+    - Monatliche Kalender-Anzeige
+    - Veranstaltungs-Markierungen auf Daten
+    - Klick zum Anzeigen von Veranstaltungs-Details
+    - Navigation (vorheriger/nächster Monat)
   
-  - **Table View:**
-    - List of all events
-    - Sortable columns
-    - Filter by date range
-    - Search functionality
+  - **Tabellen-Ansicht:**
+    - Liste aller Veranstaltungen
+    - Sortierbare Spalten
+    - Nach Datumsbereich filtern
+    - Such-Funktionalität
 
-- **RSVP Management:**
-  - Track RSVPs per event
-  - RSVP statistics
-  - RSVP form for participants
-  - RSVP status indicators
+- **RSVP-Verwaltung:**
+  - RSVPs pro Veranstaltung verfolgen
+  - RSVP-Statistiken
+  - RSVP-Formular für Teilnehmer
+  - RSVP-Status-Indikatoren
 
-- **Educator Sessions (Working Hours):**
-  - Create educator work sessions
-  - Track working hours
-  - Session management
-  - Export sessions to CSV/Excel
+- **Erzieher-Sitzungen (Arbeitszeiten):**
+  - Erzieher-Arbeits-Sitzungen erstellen
+  - Arbeitszeiten verfolgen
+  - Sitzungs-Verwaltung
+  - Sitzungen nach CSV/Excel exportieren
 
-- **Export Functions:**
-  - Export events to iCal format
-  - Export events to CSV
-  - Export calendar view
-  - Export sessions
+- **Export-Funktionen:**
+  - Veranstaltungen nach iCal-Format exportieren
+  - Veranstaltungen nach CSV exportieren
+  - Kalender-Ansicht exportieren
+  - Sitzungen exportieren
 
-- **Event Features:**
-  - Group-based events
-  - Recurring events support
-  - Event reminders
-  - Event notifications
+- **Veranstaltungs-Features:**
+  - Gruppen-basierte Veranstaltungen
+  - Wiederkehrende Veranstaltungen-Unterstützung
+  - Veranstaltungs-Erinnerungen
+  - Veranstaltungs-Benachrichtigungen
 
-**API Calls:**
-- `fetchEvents()` - List events
-- `createEvent()` - Create event
-- `updateEvent()` - Update event
-- `deleteEvent()` - Delete event
-- `rsvpToEvent()` - RSVP to event
-- `fetchEventRsvpStats()` - Get RSVP statistics
-- `exportEvent()` - Export event data
-- `exportEventCalendar()` - Export as calendar
-- `fetchSessions()` - Get educator sessions
-- `createSession()` - Create session
-- `updateSession()` - Update session
-- `deleteSession()` - Delete session
-- `exportSessions()` - Export sessions
+**API-Aufrufe:**
+- `fetchEvents()` - Veranstaltungen auflisten
+- `createEvent()` - Veranstaltung erstellen
+- `updateEvent()` - Veranstaltung aktualisieren
+- `deleteEvent()` - Veranstaltung löschen
+- `rsvpToEvent()` - RSVP zu Veranstaltung
+- `fetchEventRsvpStats()` - RSVP-Statistiken abrufen
+- `exportEvent()` - Veranstaltungs-Daten exportieren
+- `exportEventCalendar()` - Als Kalender exportieren
+- `fetchSessions()` - Erzieher-Sitzungen abrufen
+- `createSession()` - Sitzung erstellen
+- `updateSession()` - Sitzung aktualisieren
+- `deleteSession()` - Sitzung löschen
+- `exportSessions()` - Sitzungen exportieren
 
 ---
 
-### 8. Communications (`/admin/communications`)
+### 8. Kommunikation (`/admin/communications`)
 
-**File:** `pages/admin/Communications.tsx`
+**Datei:** `pages/admin/Communications.tsx`
 
-**Tab-based Interface with 4 Tabs:**
+**Tab-basierte Benutzeroberfläche mit 3 Tabs:**
 
-#### 8.1 Surveys Tab (`SurveysTab.tsx`)
-- **Survey Management:**
-  - Create surveys with questions
-  - Edit surveys
-  - Delete surveys
-  - View survey results
+#### 8.1 Umfragen-Tab (`SurveysTab.tsx`)
+- **Umfragen-Verwaltung:**
+  - Umfragen mit Fragen erstellen
+  - Umfragen bearbeiten
+  - Umfragen löschen
+  - Umfrage-Ergebnisse anzeigen
 
-- **Survey Features:**
-  - Multiple question types
-  - Response collection
-  - Results visualization
-  - Survey statistics
+- **Umfragen-Features:**
+  - Mehrere Fragetypen
+  - Antworten-Sammlung
+  - Ergebnisse-Visualisierung
+  - Umfragen-Statistiken
 
-- **Recipients:**
-  - Select groups
-  - Select individual children/parents
-  - Select educators
+- **Empfänger:**
+  - Gruppen auswählen
+  - Einzelne Kinder/Eltern auswählen
+  - Erzieher auswählen
 
-#### 8.2 Announcements Tab (`AnnouncementsTab.tsx`)
-- **Announcement Management:**
-  - Create announcements
-  - Edit announcements
-  - Delete announcements
-  - Publish announcements
+#### 8.2 Ankündigungen-Tab (`AnnouncementsTab.tsx`)
+- **Ankündigungs-Verwaltung:**
+  - Ankündigungen erstellen
+  - Ankündigungen bearbeiten
+  - Ankündigungen löschen
+  - Ankündigungen veröffentlichen
 
-- **Announcement Features:**
-  - Rich text content
-  - Recipient selection (groups, children, parents)
-  - Publishing control
-  - Read tracking
-  - Statistics (read/unread)
+- **Ankündigungs-Features:**
+  - Rich-Text-Inhalt
+  - Empfänger-Auswahl (Gruppen, Kinder, Eltern)
+  - Veröffentlichungs-Kontrolle
+  - Lese-Verfolgung
+  - Statistiken (gelesen/ungelesen)
 
-- **Recipients:**
-  - Groups
-  - Individual children
-  - Parents
-  - Educators
+- **Empfänger:**
+  - Gruppen
+  - Einzelne Kinder
+  - Eltern
+  - Erzieher
 
-#### 8.3 Absence & Health Tab (`AbsenceHealthTab.tsx`)
-- **Absence Reports:**
-  - View parent absence reports
-  - Review absence reports
-  - Resolve absence reports
-  - Export absence data
+#### 8.3 Abwesenheit & Gesundheit-Tab (`AbsenceHealthTab.tsx`)
+- **Abwesenheits-Meldungen:**
+  - Eltern-Abwesenheits-Meldungen anzeigen
+  - Abwesenheits-Meldungen überprüfen
+  - Abwesenheits-Meldungen auflösen
+  - Abwesenheits-Daten exportieren
 
-- **Educator Absences:**
-  - Create educator absence records
-  - Edit absences
-  - Resolve absences
-  - Export absences
+- **Erzieher-Abwesenheiten:**
+  - Erzieher-Abwesenheits-Datensätze erstellen
+  - Abwesenheiten bearbeiten
+  - Abwesenheiten auflösen
+  - Abwesenheiten exportieren
 
-- **Health Alerts:**
-  - Create health bulletins
-  - Activate/archive alerts
-  - Acknowledgment tracking
-  - Export health alerts
+- **Gesundheits-Warnungen:**
+  - Gesundheits-Bulletins erstellen
+  - Warnungen aktivieren/archivieren
+  - Bestätigungs-Verfolgung
+  - Gesundheits-Warnungen exportieren
 
-**API Calls:**
-- `getAllSurveys()` - List surveys
-- `createSurvey()` - Create survey
-- `updateSurvey()` - Update survey
-- `deleteSurvey()` - Delete survey
-- `fetchAnnouncements()` - List announcements
-- `createAnnouncement()` - Create announcement
-- `deleteAnnouncement()` - Delete announcement
-- `absenceHealthApi` - Absence and health APIs
+**API-Aufrufe:**
+- `getAllSurveys()` - Umfragen auflisten
+- `createSurvey()` - Umfrage erstellen
+- `updateSurvey()` - Umfrage aktualisieren
+- `deleteSurvey()` - Umfrage löschen
+- `fetchAnnouncements()` - Ankündigungen auflisten
+- `createAnnouncement()` - Ankündigung erstellen
+- `deleteAnnouncement()` - Ankündigung löschen
+- `absenceHealthApi` - Abwesenheits- und Gesundheits-APIs
 
 ---
 
 ### 9. Chat (`/admin/chat`)
 
-**File:** `pages/admin/Chat.tsx`
+**Datei:** `pages/admin/Chat.tsx`
 
-**Functionality:**
-- Uses shared `SharedChat` component with role="admin"
-- Full chat functionality (see Shared Components section)
+**Funktionalität:**
+- Verwendet gemeinsame `SharedChat`-Komponente mit role="admin"
+- Vollständige Chat-Funktionalität (siehe Gemeinsame Komponenten)
 
 ---
 
-### 10. Settings (`/admin/settings`)
+### 10. Einstellungen (`/admin/settings`)
 
-**File:** `pages/admin/Settings.tsx`
+**Datei:** `pages/admin/Settings.tsx`
 
-**Functionality:**
-- **Institution Settings:**
-  - Institution name
-  - Address
-  - Contact information
-  - Opening hours (opening time, closing time)
-  - Repeated closed days configuration
+**Funktionalität:**
+- **Institutions-Einstellungen:**
+  - Institutions-Name
+  - Adresse
+  - Kontaktinformationen
+  - Öffnungszeiten (Öffnungszeit, Schließzeit)
+  - Wiederholte Schließtage-Konfiguration
 
-- **Closed Days Management:**
-  - Add closed days
-  - Remove closed days
-  - View all closed days
-  - Calendar-based selection
+- **Schließtage-Verwaltung:**
+  - Schließtage hinzufügen
+  - Schließtage entfernen
+  - Alle Schließtage anzeigen
+  - Kalender-basierte Auswahl
 
-- **Settings Tabs:**
-  - **General Settings:**
-    - Basic institution information
-    - Address details
+- **Einstellungs-Tabs:**
+  - **Allgemeine Einstellungen:**
+    - Grundlegende Institutions-Informationen
+    - Adress-Details
   
-  - **Opening Hours:**
-    - Opening time
-    - Closing time
-    - Time format configuration
+  - **Öffnungszeiten:**
+    - Öffnungszeit
+    - Schließzeit
+    - Zeitformat-Konfiguration
   
-  - **Holidays & Closed Days:**
-    - Add holidays
-    - Add custom closed days
-    - Remove closed days
-    - Calendar view
+  - **Feiertage & Schließtage:**
+    - Feiertage hinzufügen
+    - Benutzerdefinierte Schließtage hinzufügen
+    - Schließtage entfernen
+    - Kalender-Ansicht
 
-- **Save & Validation:**
-  - Form validation
-  - Save settings
-  - Success/error notifications
-  - Settings persistence
+- **Speichern & Validierung:**
+  - Formular-Validierung
+  - Einstellungen speichern
+  - Erfolgs-/Fehler-Benachrichtigungen
+  - Einstellungs-Persistenz
 
-**API Calls:**
-- `getInstitutionSettings()` - Get settings
-- `updateInstitutionSettings()` - Update settings
-- `addClosedDay()` - Add closed day
-- `removeClosedDay()` - Remove closed day
-
----
-
-### 11. Reports Index (`/admin/reports`)
-
-**File:** `pages/admin/Reports.tsx`
-
-**Functionality:**
-- Report type selector with tabs
-- Navigation to individual report pages
-- Report descriptions
-- Quick access to all 8 report types
+**API-Aufrufe:**
+- `getInstitutionSettings()` - Einstellungen abrufen
+- `updateInstitutionSettings()` - Einstellungen aktualisieren
+- `addClosedDay()` - Schließtag hinzufügen
+- `removeClosedDay()` - Schließtag entfernen
 
 ---
 
-## Educator Dashboard Pages
+### 11. Berichte-Index (`/admin/reports`)
+
+**Datei:** `pages/admin/Reports.tsx`
+
+**Funktionalität:**
+- Berichtstyp-Auswähler mit Tabs
+- Navigation zu einzelnen Berichts-Seiten
+- Berichts-Beschreibungen
+- Schnellzugriff auf alle 8 Berichtstypen
+
+---
+
+## Educator Dashboard Seiten
 
 ### 1. Dashboard (`/educator/dashboard`)
 
-**File:** `pages/educator/Dashboard.tsx`
+**Datei:** `pages/educator/Dashboard.tsx`
 
-**Functionality:**
-- **Today's Overview:**
-  - Today's children count
-  - Checked-in children
-  - Pending check-ins (not checked in yet)
-  - Recent activity feed
+**Funktionalität:**
+- **Heutige Übersicht:**
+  - Heutige Kinder-Anzahl
+  - Eingecheckte Kinder
+  - Ausstehende Check-ins (noch nicht eingecheckt)
+  - Aktuelle Aktivitäts-Feed
 
-- **Statistics Cards:**
-  - Total assigned children
-  - Today's check-ins
-  - Pending check-ins
-  - Recent activity count
+- **Statistik-Karten:**
+  - Gesamt zugewiesene Kinder
+  - Heutige Check-ins
+  - Ausstehende Check-ins
+  - Aktuelle Aktivitäts-Anzahl
 
-- **Quick Links:**
+- **Schnellzugriffe:**
   - Check-in/out
-  - Children view
-  - Notes
+  - Kinder-Ansicht
+  - Notizen
   - Chat
-  - Personal tasks
+  - Persönliche Aufgaben
 
-- **Personal Notebook:**
-  - Private notes for educator
-  - Quick access
+- **Persönliches Notizbuch:**
+  - Private Notizen für Erzieher
+  - Schnellzugriff
 
-- **Recent Activity:**
-  - Last check-ins/outs
-  - Recent updates
-  - Activity timeline
+- **Aktuelle Aktivitäten:**
+  - Letzte Check-ins/outs
+  - Aktuelle Updates
+  - Aktivitäts-Zeitstrahl
 
-**API Calls:**
-- `fetchTodaysChildren()` - Today's children
-- `fetchPendingCheckins()` - Pending check-ins
-- `fetchMyGroup()` - Educator's group
-- `fetchEducatorCheckinStats()` - Check-in statistics
-- `fetchRecentActivity()` - Recent activity
+**API-Aufrufe:**
+- `fetchTodaysChildren()` - Heutige Kinder
+- `fetchPendingCheckins()` - Ausstehende Check-ins
+- `fetchMyGroup()` - Erzieher-Gruppe
+- `fetchEducatorCheckinStats()` - Check-in-Statistiken
+- `fetchRecentActivity()` - Aktuelle Aktivitäten
 
 ---
 
 ### 2. Check-in (`/educator/checkin`)
 
-**File:** `pages/educator/Checkin.tsx`
+**Datei:** `pages/educator/Checkin.tsx`
 
-**Functionality:**
-- **Check-in/out Operations:**
-  - Check-in child (CHECK_IN)
-  - Check-out child (CHECK_OUT)
-  - Manual time correction
-  - Check-in history per child
+**Funktionalität:**
+- **Check-in/out-Operationen:**
+  - Kind einchecken (CHECK_IN)
+  - Kind auschecken (CHECK_OUT)
+  - Manuelle Zeitkorrektur
+  - Check-in-Historie pro Kind
 
-- **Today's Children List:**
-  - List of assigned children
-  - Check-in status indicators
-  - Quick check-in/out buttons
-  - Time display
+- **Heutige Kinder-Liste:**
+  - Liste zugewiesener Kinder
+  - Check-in-Status-Indikatoren
+  - Schnell-Check-in/out-Buttons
+  - Zeit-Anzeige
 
-- **Statistics:**
-  - Today's check-ins count
-  - Checked-out count
-  - Pending check-ins
-  - Total children
+- **Statistiken:**
+  - Heutige Check-ins-Anzahl
+  - Ausgecheckte Anzahl
+  - Ausstehende Check-ins
+  - Gesamtanzahl Kinder
 
-- **Check-in Features:**
-  - Time correction capability
-  - Check-in notes/comments
-  - Notification sending on check-in
-  - Check-in history view
+- **Check-in-Features:**
+  - Zeitkorrektur-Funktionalität
+  - Check-in-Notizen/Kommentare
+  - Benachrichtigungs-Versand bei Check-in
+  - Check-in-Historie-Ansicht
 
-- **Child Information:**
-  - Child name and photo
-  - Group assignment
-  - Check-in status
-  - Last check-in time
+- **Kind-Informationen:**
+  - Kind-Name und Foto
+  - Gruppen-Zuordnung
+  - Check-in-Status
+  - Letzte Check-in-Zeit
 
-**API Calls:**
-- `fetchTodaysChildren()` - Today's children
-- `checkinKind()` - Perform check-in/out
-- `fetchChildHistory()` - Check-in history
-- `correctCheckinTime()` - Correct check-in time
-- `sendNotification()` - Send notifications
+**API-Aufrufe:**
+- `fetchTodaysChildren()` - Heutige Kinder
+- `checkinKind()` - Check-in/out durchführen
+- `fetchChildHistory()` - Check-in-Historie
+- `correctCheckinTime()` - Check-in-Zeit korrigieren
+- `sendNotification()` - Benachrichtigungen senden
 
 ---
 
-### 3. Children View (`/educator/kinder`)
+### 3. Kinder-Ansicht (`/educator/kinder`)
 
-**File:** `pages/educator/Kinder.tsx`
+**Datei:** `pages/educator/Kinder.tsx`
 
-**Functionality:**
-- **Assigned Children List:**
-  - View all assigned children
-  - Child details
-  - Group information
-  - Check-in status
+**Funktionalität:**
+- **Zugewiesene Kinder-Liste:**
+  - Alle zugewiesenen Kinder anzeigen
+  - Kind-Details
+  - Gruppen-Informationen
+  - Check-in-Status
 
-- **Child Information:**
-  - Name, photo
-  - Group assignment
-  - Parents information
-  - Medical information (allergies, conditions)
-  - Consent status
+- **Kind-Informationen:**
+  - Name, Foto
+  - Gruppen-Zuordnung
+  - Eltern-Informationen
+  - Medizinische Informationen (Allergien, Bedingungen)
+  - Einwilligungs-Status
 
-- **Filtering:**
-  - Filter by group
-  - Search by name
-  - Date-based filtering
+- **Filterung:**
+  - Nach Gruppe filtern
+  - Nach Name suchen
+  - Datumsbasierte Filterung
 
-- **Quick Actions:**
-  - View child details
+- **Schnellaktionen:**
+  - Kind-Details anzeigen
   - Check-in/out
-  - View notes
-  - Open chat
+  - Notizen anzeigen
+  - Chat öffnen
 
-**API Calls:**
-- `fetchMyGroup()` - Get educator's group
-- `fetchTodaysChildren()` - Get children
+**API-Aufrufe:**
+- `fetchMyGroup()` - Erzieher-Gruppe abrufen
+- `fetchTodaysChildren()` - Kinder abrufen
 
 ---
 
-### 4. Notes (`/educator/notizen`)
+### 4. Notizen (`/educator/notizen`)
 
-**File:** `pages/educator/Notizen.tsx`
+**Datei:** `pages/educator/Notizen.tsx`
 
-**Functionality:**
-- **Note Management:**
-  - Create notes for children
-  - Edit notes
-  - Delete notes
-  - Bulk delete notes
-  - View note details
+**Funktionalität:**
+- **Notizen-Verwaltung:**
+  - Notizen für Kinder erstellen
+  - Notizen bearbeiten
+  - Notizen löschen
+  - Notizen massenweise löschen
+  - Notiz-Details anzeigen
 
-- **Note Types:**
-  - GENERAL - General observations
-  - BEHAVIOR - Behavioral notes
-  - HEALTH - Health-related notes
-  - DEVELOPMENT - Development notes
-  - INCIDENT - Incident reports
+- **Notiz-Typen:**
+  - GENERAL - Allgemeine Beobachtungen
+  - BEHAVIOR - Verhaltens-Notizen
+  - HEALTH - Gesundheits-bezogene Notizen
+  - DEVELOPMENT - Entwicklungs-Notizen
+  - INCIDENT - Vorfälle-Berichte
 
-- **Note Features:**
-  - Rich text content
-  - File attachments (photos, PDFs)
-  - Private notes (educator-only)
-  - Note search
-  - Filter by type, child, date
-  - Sort options
+- **Notiz-Features:**
+  - Rich-Text-Inhalt
+  - Dateianhänge (Fotos, PDFs)
+  - Private Notizen (nur Erzieher)
+  - Notizen-Suche
+  - Nach Typ, Kind, Datum filtern
+  - Sortier-Optionen
 
-- **Note Display:**
-  - Card-based layout
-  - Note type indicators
-  - Attachment previews
-  - Timestamp display
-  - Child information
+- **Notiz-Anzeige:**
+  - Karten-basiertes Layout
+  - Notiz-Typ-Indikatoren
+  - Anhang-Vorschauen
+  - Zeitstempel-Anzeige
+  - Kind-Informationen
 
 - **Export:**
-  - Export notes to CSV
-  - Export with attachments
-  - Filtered export
+  - Notizen nach CSV exportieren
+  - Export mit Anhängen
+  - Gefilterter Export
 
-**API Calls:**
-- `getNotes()` - List all notes
-- `getChildNotes()` - Get notes for specific child
-- `createNote()` - Create note
-- `updateNote()` - Update note
-- `deleteNote()` - Delete note
-- `deleteMultipleNotes()` - Bulk delete
-- `exportNotes()` - Export notes
-- `searchNotes()` - Search notes
+**API-Aufrufe:**
+- `getNotes()` - Alle Notizen auflisten
+- `getChildNotes()` - Notizen für spezifisches Kind abrufen
+- `createNote()` - Notiz erstellen
+- `updateNote()` - Notiz aktualisieren
+- `deleteNote()` - Notiz löschen
+- `deleteMultipleNotes()` - Massenlöschung
+- `exportNotes()` - Notizen exportieren
+- `searchNotes()` - Notizen suchen
 
 ---
 
 ### 5. Chat (`/educator/chat`)
 
-**File:** `pages/educator/Chat.tsx`
+**Datei:** `pages/educator/Chat.tsx`
 
-**Functionality:**
-- Uses shared `SharedChat` component with role="educator"
-- Full chat functionality (see Shared Components section)
-
----
-
-## Super Admin Dashboard Pages
-
-### 1. Dashboard (`/super-admin/dashboard`)
-
-**File:** `pages/super_admin/Dashboard.tsx`
-
-**Functionality:**
-- **Platform Statistics:**
-  - Total Träger (organizations)
-  - Total institutions
-  - Total users (all roles)
-  - Active users
-  - Inactive users
-
-- **Quick Links:**
-  - Träger management
-  - Institutions management
-  - Statistics
-  - Reports
-  - Educators management
-  - Parents management
-  - GDPR compliance
-
-- **Activity Log:**
-  - Recent platform activity
-  - System-wide events
-  - Activity timeline
-
-- **Personal Notebook:**
-  - Private notes for super admin
-
-**API Calls:**
-- `getSuperAdminStats()` - Platform statistics
-- Activity log retrieval
+**Funktionalität:**
+- Verwendet gemeinsame `SharedChat`-Komponente mit role="educator"
+- Vollständige Chat-Funktionalität (siehe Gemeinsame Komponenten)
 
 ---
 
-### 2. Träger Management (`/super-admin/traeger`)
-
-**File:** `pages/super_admin/Traeger.tsx`
-
-**Functionality:**
-- **Träger CRUD:**
-  - Create Träger (organization)
-  - Edit Träger information
-  - Delete Träger
-  - View Träger details
-
-- **Träger Information:**
-  - Name
-  - Address
-  - Contact email
-  - Contact phone
-  - Created by (Super Admin)
-  - Creation date
-
-- **Träger-Admin Management:**
-  - Create Träger-Admin users
-  - Edit Träger-Admin information
-  - Delete Träger-Admin
-  - Assign Träger-Admin to Träger
-  - View all Träger-Admins
-
-- **Träger-Admin Information:**
-  - Name, email
-  - Password management
-  - Träger assignment
-  - Status (active/inactive)
-  - Last login
-
-- **Search & Filter:**
-  - Search Träger by name
-  - Search Träger-Admins
-  - Pagination support
-
-**API Calls:**
-- `getAllTraeger()` - List all Träger
-- `createTraeger()` - Create Träger
-- `updateTraeger()` - Update Träger
-- `deleteTraeger()` - Delete Träger
-- `getAllTraegerAdmins()` - List Träger-Admins
-- `createTraegerAdmin()` - Create Träger-Admin
-- `updateTraegerAdmin()` - Update Träger-Admin
-- `deleteTraegerAdmin()` - Delete Träger-Admin
-- `fetchAllUsers()` - Get all users
-- `updateUserStatus()` - Update user status
-
----
-
-### 3. Institutions (`/super-admin/institutionen`)
-
-**File:** `pages/super_admin/Institutionen.tsx`
-
-**Functionality:**
-- **Institution CRUD:**
-  - Create institution
-  - Edit institution
-  - Delete institution
-  - View institution details
-
-- **Institution Information:**
-  - Name, address
-  - Träger assignment (required)
-  - Opening hours
-  - Contact information
-  - Settings
-
-- **Institution Statistics:**
-  - Children count
-  - Groups count
-  - Educators count
-  - Activity metrics
-
-- **Search & Filter:**
-  - Search by name
-  - Filter by Träger
-  - Pagination support
-
-**API Calls:**
-- Institution management APIs
-- Statistics APIs
-
----
-
-### 4. Statistics (`/super-admin/statistiken`)
-
-**File:** `pages/super_admin/Statistiken.tsx`
-
-**Functionality:**
-- **Platform-wide Statistics:**
-  - User growth over time
-  - Active users
-  - Check-in trends
-  - Message volume
-  - Notification statistics
-  - Failed logins
-  - Group attendance
-  - Check-in methods
-
-- **Charts & Visualizations:**
-  - User growth charts
-  - Activity trends
-  - Platform-wide metrics
-  - Comparative analytics
-
-- **Date Range Filtering:**
-  - Custom date ranges
-  - Time period selection
-  - Export capabilities
-
-**API Calls:**
-- `getSuperAdminStats()` - Platform statistics
-- Various analytics APIs
-
----
-
-### 5. Reports (`/super-admin/reports`)
-
-**File:** `pages/super_admin/Reports.tsx`
-
-**Functionality:**
-- **Platform Reports:**
-  - User growth report
-  - Active users report
-  - Check-in trends report
-  - Active groups report
-  - Message volume report
-  - Notification stats report
-  - Failed logins report
-  - Group attendance report
-  - Check-in methods report
-  - Platform statistics report
-
-- **Export Functions:**
-  - CSV export
-  - PDF export
-  - Bulk export
-
-**API Calls:**
-- Platform report APIs from `reportApi.ts`
-
----
-
-### 6. Educators (`/super-admin/educators`)
-
-**File:** `pages/super_admin/Educators.tsx`
-
-**Functionality:**
-- **Platform-wide Educator Management:**
-  - View all educators across all institutions
-  - Educator details
-  - Institution assignment
-  - Status tracking
-
-- **Educator Information:**
-  - Name, email, phone
-  - Institution
-  - Groups
-  - Status (active/inactive)
-  - Last login
-
-- **Search & Filter:**
-  - Search by name/email
-  - Filter by institution
-  - Filter by status
-  - Pagination support
-
-**API Calls:**
-- Platform-wide user APIs
-
----
-
-### 7. Parents (`/super-admin/parents`)
-
-**File:** `pages/super_admin/Parents.tsx`
-
-**Functionality:**
-- **Platform-wide Parent Management:**
-  - View all parents across all institutions
-  - Parent details
-  - Children assignments
-  - Status tracking
-
-- **Parent Information:**
-  - Name, email, phone
-  - Institution
-  - Children
-  - Status (active/inactive)
-  - Last login
-
-- **Search & Filter:**
-  - Search by name/email
-  - Filter by institution
-  - Filter by status
-  - Pagination support
-
-**API Calls:**
-- Platform-wide user APIs
-
----
-
-### 8. GDPR Compliance (`/super-admin/gdpr`)
-
-**File:** `pages/super_admin/GDPRCompliancePage.tsx`
-
-**Functionality:**
-- **GDPR Dashboard:**
-  - Audit logs
-  - Pending deletions
-  - Data retention management
-  - Compliance reports
-
-- **Data Management:**
-  - Data export requests
-  - Deletion requests
-  - Anonymization
-  - Deep cleanup
-
-- **Compliance Tools:**
-  - Consent tracking
-  - Data retention periods
-  - Audit trail
-  - Compliance reports
-
-**API Calls:**
-- GDPR management APIs from `gdprApi.ts`
-
----
-
-## Träger Admin Dashboard Pages
-
-### 1. Dashboard (`/traeger-admin/dashboard`)
-
-**File:** `pages/traeger_admin/Dashboard.tsx`
-
-**Functionality:**
-- **Träger Statistics:**
-  - Total children (Träger-wide)
-  - Children >8h attendance
-  - Total educators
-  - Total institutions
-  - Inactive users (last 4 weeks)
-  - Failed logins (last 30 days)
-
-- **Quick Links:**
-  - Institutions management
-  - Statistics
-  - User management
-  - Settings
-
-- **Alerts:**
-  - Inactive users warning
-  - Failed login alerts
-  - Security notifications
-
-**API Calls:**
-- `getTraegerStats()` - Träger statistics
-- `getInactiveUsers()` - Inactive users
-- `getFailedLogins()` - Failed logins
-
----
-
-### 2. Institutions (`/traeger-admin/einrichtungen`)
-
-**File:** `pages/traeger_admin/Einrichtungen.tsx`
-
-**Functionality:**
-- **Institution Management (Träger-wide):**
-  - View all institutions in Träger
-  - Create new institution
-  - Edit institution
-  - Delete institution
-  - View institution details
-
-- **Institution Information:**
-  - Name, address
-  - Contact information
-  - Settings
-  - Statistics per institution
-
-- **Institution Statistics:**
-  - Children count per institution
-  - Educators count per institution
-  - Activity metrics
-
-- **Search & Filter:**
-  - Search by name
-  - Pagination support
-
-**API Calls:**
-- Träger Admin institution APIs
-
----
-
-### 3. Statistics (`/traeger-admin/statistiken`)
-
-**File:** `pages/traeger_admin/Statistiken.tsx`
-
-**Functionality:**
-- **Träger-wide Statistics:**
-  - Total children (all institutions)
-  - Children >8h (all institutions)
-  - Total educators
-  - Per-institution breakdown
-  - Inactive users
-  - Failed logins
-
-- **Charts & Visualizations:**
-  - Träger-wide trends
-  - Per-institution comparison
-  - Activity charts
-
-- **Date Range Filtering:**
-  - Custom date ranges
-  - Export capabilities
-
-**API Calls:**
-- Träger Admin statistics APIs
-
----
-
-### 4. Users (`/traeger-admin/benutzer`)
-
-**File:** `pages/traeger_admin/Benutzer.tsx`
-
-**Functionality:**
-- **User Management (Träger-wide):**
-  - View all Admins and Educators in Träger
-  - Create new users (Admin, Educator)
-  - Edit user information
-  - Delete users
-  - Block/unblock users
-
-- **User Information:**
-  - Name, email, phone
-  - Role (ADMIN, EDUCATOR)
-  - Institution assignment
-  - Status (active/inactive)
-  - Last login
-
-- **User Features:**
-  - Password management
-  - Status updates
-  - Block/unblock functionality
-  - Inactive user identification
-
-- **Search & Filter:**
-  - Search by name/email
-  - Filter by role
-  - Filter by institution
-  - Filter by status
-  - Pagination support
-
-**Note:** Parents cannot be managed by Träger-Admin
-
-**API Calls:**
-- Träger Admin user management APIs
-
----
-
-### 5. Settings (`/traeger-admin/einstellungen`)
-
-**File:** `pages/traeger_admin/Einstellungen.tsx`
-
-**Functionality:**
-- **Träger Settings:**
-  - Träger information
-  - Contact details
-  - Settings configuration
-  - (Placeholder for future features)
-
-**API Calls:**
-- Träger settings APIs
-
----
-
-## Shared Components
-
-### Chat Component (`SharedChat.tsx`)
-
-**Location:** `components/chat/SharedChat.tsx`
-
-**Functionality:**
-- **Real-time Messaging:**
-  - WebSocket-based communication
-  - Direct messages (1-to-1)
-  - Group conversations
-  - Message reactions (emojis)
-  - Typing indicators
-  - Read receipts
-  - Online status
-
-- **Message Features:**
-  - Text messages
-  - File attachments (images, PDFs)
-  - Message editing
-  - Message deletion
-  - Message search
-  - Message pagination
-
-- **Conversation Management:**
-  - Create new conversations
-  - Conversation list
-  - Conversation settings
-  - Participant management
-
-- **UI Features:**
-  - Full-screen chat interface
-  - Responsive design
-  - Dark mode support
-  - File upload
-  - Image viewer
-  - Message status indicators
-
-**API Calls:**
-- `conversationApi.ts` - All conversation APIs
-- WebSocket service for real-time updates
+## Gemeinsame Komponenten
+
+### Chat-Komponente (`SharedChat.tsx`)
+
+**Ort:** `components/chat/SharedChat.tsx`
+
+**Funktionalität:**
+- **Echtzeit-Messaging:**
+  - WebSocket-basierte Kommunikation
+  - Direktnachrichten (1-zu-1)
+  - Gruppen-Gespräche
+  - Nachrichten-Reaktionen (Emojis)
+  - Tipp-Indikatoren
+  - Lesebestätigungen
+  - Online-Status
+
+- **Nachrichten-Features:**
+  - Textnachrichten
+  - Dateianhänge (Bilder, PDFs)
+  - Nachrichten bearbeiten
+  - Nachrichten löschen
+  - Nachrichten-Suche
+  - Nachrichten-Paginierung
+
+- **Gesprächs-Verwaltung:**
+  - Neue Gespräche erstellen
+  - Gesprächs-Liste
+  - Gesprächs-Einstellungen
+  - Teilnehmer-Verwaltung
+
+- **UI-Features:**
+  - Vollbild-Chat-Benutzeroberfläche
+  - Responsives Design
+  - Dark-Mode-Unterstützung
+  - Datei-Upload
+  - Bildbetrachter
+  - Nachrichten-Status-Indikatoren
+
+**API-Aufrufe:**
+- `conversationApi.ts` - Alle Gesprächs-APIs
+- WebSocket-Service für Echtzeit-Updates
 
 ---
 
 ## API Services
 
-The dashboard uses **29 API service files** located in `services/`:
+Das Dashboard verwendet **29 API-Service-Dateien** in `services/`:
 
-1. `absenceApi.ts` - Absence reports
-2. `absenceHealthApi.ts` - Absence and health alerts
-3. `activityApi.ts` - Activity logs
-4. `adminApi.ts` - Admin-specific APIs
-5. `announcementsApi.ts` - Announcements
-6. `apiClient.ts` - Base API client
-7. `authApi.ts` - Authentication
-8. `calendarApi.ts` - Calendar and sessions
-9. `conversationApi.ts` - Chat conversations
-10. `dokugenApi.ts` - AI document generation
-11. `educatorApi.ts` - Educator-specific APIs
-12. `eventApi.ts` - Events
-13. `gdprApi.ts` - GDPR compliance
-14. `healthAlertsApi.ts` - Health alerts
-15. `institutionSettingsApi.ts` - Institution settings
+1. `absenceApi.ts` - Abwesenheits-Meldungen
+2. `absenceHealthApi.ts` - Abwesenheiten und Gesundheits-Warnungen
+3. `activityApi.ts` - Aktivitätsprotokolle
+4. `adminApi.ts` - Admin-spezifische APIs
+5. `announcementsApi.ts` - Ankündigungen
+6. `apiClient.ts` - Basis-API-Client
+7. `authApi.ts` - Authentifizierung
+8. `calendarApi.ts` - Kalender und Sitzungen
+9. `conversationApi.ts` - Chat-Gespräche
+10. `dokugenApi.ts` - KI-Dokumentenerstellung
+11. `educatorApi.ts` - Erzieher-spezifische APIs
+12. `eventApi.ts` - Veranstaltungen
+13. `gdprApi.ts` - GDPR-Compliance
+14. `healthAlertsApi.ts` - Gesundheits-Warnungen
+15. `institutionSettingsApi.ts` - Institutions-Einstellungen
 16. `messagingApi.ts` - Messaging
-17. `noteApi.ts` - Notes
-18. `notificationsApi.ts` - Notifications
-19. `notificationService.ts` - Notification service
-20. `offlineService.ts` - Offline support
-21. `personalTaskApi.ts` - Personal tasks
-22. `profileApi.ts` - User profile
-23. `recipientsService.ts` - Recipient management
-24. `reportApi.ts` - Reports
+17. `noteApi.ts` - Notizen
+18. `notificationsApi.ts` - Benachrichtigungen
+19. `notificationService.ts` - Benachrichtigungs-Service
+20. `offlineService.ts` - Offline-Unterstützung
+21. `personalTaskApi.ts` - Persönliche Aufgaben
+22. `profileApi.ts` - Benutzer-Profil
+23. `recipientsService.ts` - Empfänger-Verwaltung
+24. `reportApi.ts` - Berichte
 25. `superAdminApi.ts` - Super Admin APIs
-26. `surveysApi.ts` - Surveys
+26. `surveysApi.ts` - Umfragen
 27. `traegerAdminApi.ts` - Träger Admin APIs
-28. `uploadApi.ts` - File uploads
-29. `websocketService.ts` - WebSocket service
+28. `uploadApi.ts` - Datei-Uploads
+29. `websocketService.ts` - WebSocket-Service
 
 ---
 
-## Summary
+## Zusammenfassung
 
-### Page Count by Role
+### Seitenanzahl nach Rolle
 
-| Role | Pages | Details |
+| Rolle | Seiten | Details |
 |------|-------|---------|
-| **ADMIN** | 11 | Dashboard, Children, Groups, Personal, Statistiken, Reports (8 types), Events, Communications, Chat, Settings |
-| **EDUCATOR** | 5 | Dashboard, Checkin, Kinder, Notizen, Chat |
-| **SUPER_ADMIN** | 8 | Dashboard, Traeger, Institutionen, Statistiken, Reports, Educators, Parents, GDPR |
+| **SUPER_ADMIN** | 8 | Dashboard, Träger, Institutionen, Statistiken, Berichte, Educators, Parents, GDPR |
 | **TRAGER_ADMIN** | 5 | Dashboard, Einrichtungen, Statistiken, Benutzer, Einstellungen |
-| **Total** | **29** | |
+| **ADMIN** | 11 | Dashboard, Kinder, Gruppen, Personal, Statistiken, Berichte (8 Typen), Events, Communications, Chat, Settings |
+| **EDUCATOR** | 5 | Dashboard, Checkin, Kinder, Notizen, Chat |
+| **Gesamt** | **29** | |
 
-### Key Features Across All Roles
+### Wichtige Features über alle Rollen hinweg
 
-- ✅ Role-based access control
-- ✅ Real-time updates (WebSocket)
-- ✅ Responsive design
-- ✅ Dark mode support
-- ✅ Search and filtering
-- ✅ Pagination
-- ✅ Export functionality (CSV, PDF)
-- ✅ File uploads
-- ✅ Notifications
-- ✅ Activity logging
-- ✅ GDPR compliance tools
+- ✅ Rollenbasierte Zugriffskontrolle
+- ✅ Echtzeit-Updates (WebSocket)
+- ✅ Responsives Design
+- ✅ Dark-Mode-Unterstützung
+- ✅ Suche und Filterung
+- ✅ Paginierung
+- ✅ Export-Funktionalität (CSV, PDF)
+- ✅ Datei-Uploads
+- ✅ Benachrichtigungen
+- ✅ Aktivitätsprotokollierung
+- ✅ GDPR-Compliance-Tools
 
 ---
 
-**Last Updated:** January 2025  
-**Documentation Status:** ✅ Complete and Accurate
-
+**Letzte Aktualisierung:** Januar 2025  
+**Dokumentations-Status:** ✅ Vollständig und Akkurat
