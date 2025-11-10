@@ -1,6 +1,6 @@
 # App4KITAs Dashboard - Vollständige Funktionalitäts-Dokumentation
 
-**Letzte Aktualisierung: October 2025**  
+**Letzte Aktualisierung: Oktober 2025**  
 
 ---
 
@@ -40,33 +40,26 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/super_admin/Dashboard.tsx`
 
 **Funktionalität:**
-- **Plattform-Statistiken:**
-  - Gesamtanzahl Träger (Organisationen)
-  - Gesamtanzahl Institutionen
-  - Gesamtanzahl Benutzer (alle Rollen)
-  - Aktive Benutzer
-  - Inaktive Benutzer
+- **Plattform-Statistiken (4 StatCards):**
+  - Gesamt Nutzer (users)
+  - Institutionen (institutionen)
+  - Aktive Nutzer (activeUsers)
+  - Inaktive Nutzer (inactiveUsers)
 
-- **Schnellzugriffe:**
-  - Träger-Verwaltung
-  - Institutionen-Verwaltung
-  - Statistiken
-  - Berichte
-  - Erzieher-Verwaltung
-  - Eltern-Verwaltung
-  - GDPR-Compliance
-
-- **Aktivitätsprotokoll:**
-  - Aktuelle Plattform-Aktivitäten
-  - System-weite Ereignisse
-  - Aktivitäts-Zeitstrahl
+- **Schnellzugriffe (4 Action Buttons):**
+  - Institutionen verwalten → `/dashboard/superadmin/institutionen`
+  - Nutzer verwalten → `/dashboard/superadmin/erzieher`
+  - Statistiken anzeigen → `/dashboard/superadmin/statistiken`
+  - DSGVO Compliance → `/dashboard/superadmin/gdpr`
 
 - **Persönliches Notizbuch:**
-  - Private Notizen für Super Admin
+  - PersonalNotebook Komponente (volle Breite)
+
+- **Aktivitätsprotokoll:**
+  - ActivityLog Komponente (letzte 10 Aktivitäten)
 
 **API-Aufrufe:**
-- `getSuperAdminStats()` - Plattform-Statistiken
-- Aktivitätsprotokoll-Abruf
+- `getSuperAdminStats()` - Plattform-Statistiken (users, institutionen, activity, activeUsers, inactiveUsers, children, checkInsToday, trends)
 
 ---
 
@@ -75,38 +68,27 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/super_admin/Traeger.tsx`
 
 **Funktionalität:**
-- **Träger CRUD:**
-  - Träger (Organisation) erstellen
-  - Träger-Informationen bearbeiten
+- **Zwei separate CRUD-Bereiche:**
+
+  **1. Träger Übersicht:**
+  - Träger erstellen (Name*, Adresse, Kontakt E-Mail, Kontakt Telefon)
+  - Träger bearbeiten
   - Träger löschen
-  - Träger-Details anzeigen
+  - Spalten: Name, Adresse, Kontakt E-Mail, Kontakt Telefon, Einrichtungen (Anzahl), Erstellt von
+  - Suche, Paginierung
 
-- **Träger-Informationen:**
-  - Name
-  - Adresse
-  - Kontakt-E-Mail
-  - Kontakt-Telefon
-  - Erstellt von (Super Admin)
-  - Erstellungsdatum
-
-- **Träger-Admin-Verwaltung:**
-  - Träger-Admin-Benutzer erstellen
-  - Träger-Admin-Informationen bearbeiten
+  **2. Träger-Admin Übersicht:**
+  - Träger-Admin erstellen (Name*, E-Mail*, Passwort*, Träger*)
+  - Träger-Admin bearbeiten (Name, E-Mail, optionales neues Passwort)
   - Träger-Admin löschen
-  - Träger-Admin einem Träger zuweisen
-  - Alle Träger-Admins anzeigen
+  - Spalten: Träger-Admin (Name mit Avatar), Kontakt (E-Mail + Träger-Name), Status (klickbarer Badge + Letzter Login)
+  - Status-Badge: Aktiv/Inaktiv/Gesperrt (klickbar zum Umschalten)
+  - Suche, Paginierung
 
-- **Träger-Admin-Informationen:**
-  - Name, E-Mail
-  - Passwort-Verwaltung
-  - Träger-Zuordnung
-  - Status (aktiv/inaktiv)
-  - Letzter Login
-
-- **Suche & Filter:**
-  - Träger nach Name suchen
-  - Träger-Admins suchen
-  - Paginierung
+- **Validierung:**
+  - E-Mail-Format-Prüfung
+  - Duplikat-Prüfung (E-Mail bereits vergeben)
+  - Träger-Name-Eindeutigkeit
 
 **API-Aufrufe:**
 - `getAllTraeger()` - Alle Träger auflisten
@@ -117,8 +99,8 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 - `createTraegerAdmin()` - Träger-Admin erstellen
 - `updateTraegerAdmin()` - Träger-Admin aktualisieren
 - `deleteTraegerAdmin()` - Träger-Admin löschen
-- `fetchAllUsers()` - Alle Benutzer abrufen
-- `updateUserStatus()` - Benutzerstatus aktualisieren
+- `fetchAllUsers()` - Alle Benutzer abrufen (für Duplikat-Prüfung)
+- `updateUserStatus()` - Benutzerstatus aktualisieren (Toggle)
 
 ---
 
@@ -127,33 +109,40 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/super_admin/Institutionen.tsx`
 
 **Funktionalität:**
-- **Institution CRUD:**
-  - Institution erstellen
-  - Institution bearbeiten
+- **Zwei separate CRUD-Bereiche:**
+
+  **1. Institutionen Übersicht:**
+  - Institution erstellen (Name*, Adresse*, Träger*)
+  - Institution bearbeiten (Name, Adresse, Träger)
   - Institution löschen
-  - Institutions-Details anzeigen
+  - Spalten: Name, Adresse, Träger
+  - Suche, Paginierung
 
-- **Institutions-Informationen:**
-  - Name, Adresse
-  - Träger-Zuordnung (erforderlich)
-  - Öffnungszeiten
-  - Kontaktinformationen
-  - Einstellungen
+  **2. Kitaleitung Übersicht:**
+  - Kitaleitung (Admin) erstellen (Name*, E-Mail*, Passwort*, Institution*)
+  - Kitaleitung bearbeiten (Name, E-Mail, optionales neues Passwort)
+  - Kitaleitung löschen
+  - Spalten: Kitaleitung (Name mit Avatar), Kontakt (E-Mail + Institution-Name), Status (klickbarer Badge + Letzter Login)
+  - Status-Badge: Aktiv/Inaktiv/Gesperrt (klickbar zum Umschalten)
+  - Suche, Paginierung
 
-- **Institutions-Statistiken:**
-  - Anzahl Kinder
-  - Anzahl Gruppen
-  - Anzahl Erzieher
-  - Aktivitäts-Metriken
-
-- **Suche & Filter:**
-  - Nach Name suchen
-  - Nach Träger filtern
-  - Paginierung
+- **Validierung:**
+  - E-Mail-Format-Prüfung
+  - Duplikat-Prüfung (E-Mail bereits vergeben)
+  - Institution-Name-Eindeutigkeit
 
 **API-Aufrufe:**
-- Institutions-Verwaltungs-APIs
-- Statistiken-APIs
+- `fetchInstitutionen()` - Alle Institutionen auflisten
+- `addKita()` - Institution erstellen
+- `editKita()` - Institution aktualisieren
+- `deleteKita()` - Institution löschen
+- `fetchInstitutionenAdmins()` - Alle Admins auflisten
+- `registerAdmin()` - Admin erstellen
+- `editAdmin()` - Admin aktualisieren
+- `deleteAdmin()` - Admin löschen
+- `getAllTraeger()` - Träger für Dropdown
+- `fetchAllUsers()` - Alle Benutzer abrufen (für Duplikat-Prüfung)
+- `updateUserStatus()` - Benutzerstatus aktualisieren (Toggle)
 
 ---
 
@@ -162,30 +151,47 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/super_admin/Statistiken.tsx`
 
 **Funktionalität:**
-- **Plattform-weite Statistiken:**
-  - Benutzerwachstum über Zeit
-  - Aktive Benutzer
-  - Check-in-Trends
-  - Nachrichten-Volumen
-  - Benachrichtigungs-Statistiken
-  - Fehlgeschlagene Logins
-  - Gruppen-Anwesenheit
-  - Check-in-Methoden
+- **Zeitraum-Auswahl:**
+  - 7 Tage, 30 Tage, 90 Tage, 1 Jahr
+  - Aktualisieren-Button
+  - Auto-Refresh alle 5 Minuten
 
-- **Diagramme & Visualisierungen:**
-  - Benutzerwachstums-Diagramme
-  - Aktivitäts-Trends
-  - Plattform-weite Metriken
-  - Vergleichende Analysen
+- **Export-Funktionen:**
+  - Excel-Export (`.xlsx`)
+  - PDF-Export (`.pdf`)
 
-- **Datumsbereich-Filterung:**
-  - Benutzerdefinierte Datumsbereiche
-  - Zeitraum-Auswahl
-  - Export-Funktionen
+- **Statistik-Kategorien (7 Sektionen):**
+
+  **1. Key Performance Indicators:**
+  - Gesamt Nutzer, Aktive Nutzer, Institutionen, Kinder
+
+  **2. Nutzer & Engagement:**
+  - Admins, Erzieher:innen, Eltern, Gruppen
+
+  **3. Aktivität & Check-ins:**
+  - Gesamt Check-ins, Heutige Check-ins, Verspätete Check-ins, Ø Check-ins/Kind
+
+  **4. Kommunikation:**
+  - Gesamt Nachrichten, Nachrichten (Zeitraum), Gesamt Benachrichtigungen, Ø Nachrichten/Nutzer
+
+  **5. Aufgaben & Produktivität:**
+  - Gesamt Aufgaben, Abgeschlossene Aufgaben, Ausstehende Aufgaben, Erfolgsrate
+
+  **6. Inhalte & Veranstaltungen:**
+  - Veranstaltungen, Ankündigungen, Umfragen, Aktivitäts-Logs
+
+  **7. Sicherheit & Compliance:**
+  - Fehlgeschlagene Logins, Einverständniserklärungen, DSGVO-Anfragen
+
+- **StatCard Features:**
+  - Trend-Indikatoren (↑/↓ mit Prozent)
+  - Icons, Beschreibungen
+  - Hover-Effekte
 
 **API-Aufrufe:**
-- `getSuperAdminStats()` - Plattform-Statistiken
-- Verschiedene Analytics-APIs
+- `getSuperAdminStats(period)` - Plattform-Statistiken mit Zeitraum
+- `/api/reports/platform-stats?format=excel&period={period}` - Excel-Export
+- `/api/reports/platform-stats?format=pdf&period={period}` - PDF-Export
 
 ---
 
@@ -194,25 +200,32 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/super_admin/Reports.tsx`
 
 **Funktionalität:**
-- **Plattform-Berichte:**
-  - Benutzerwachstums-Bericht
-  - Aktive Benutzer-Bericht
-  - Check-in-Trends-Bericht
-  - Aktive Gruppen-Bericht
-  - Nachrichten-Volumen-Bericht
-  - Benachrichtigungs-Statistiken-Bericht
-  - Fehlgeschlagene Logins-Bericht
-  - Gruppen-Anwesenheits-Bericht
-  - Check-in-Methoden-Bericht
-  - Plattform-Statistiken-Bericht
+- **9 Report-Karten in 2 Sektionen:**
 
-- **Export-Funktionen:**
-  - CSV-Export
-  - PDF-Export
-  - Massen-Export
+  **Sektion 1: Nutzer & Aktivität (6 Reports):**
+  1. **Benutzerwachstum** - Datumsbereich (Von/Bis), Presets: Dieses Jahr / Letzte 30 Tage / Letzte 7 Tage
+  2. **Aktive Nutzer** - Tage (1-365), Presets: 7/30/90 Tage
+  3. **Check-in Trends** - Datumsbereich (Von/Bis), Presets
+  4. **Aktive Gruppen** - Datumsbereich (Von/Bis), Presets
+  5. **Nachrichtenvolumen** - Datumsbereich (Von/Bis), Presets
+  6. **Benachrichtigungsstatistiken** - Datumsbereich (Von/Bis), Presets
+
+  **Sektion 2: Sicherheit & Qualität (3 Reports):**
+  7. **Fehlgeschlagene Logins** - Datumsbereich (Von/Bis), Presets
+  8. **Gruppenanwesenheit** - Datumsbereich (Von/Bis), Presets
+  9. **Check-in Methoden** - Datumsbereich (Von/Bis), Presets
+
+- **Jede Report-Karte:**
+  - Icon, Titel mit Tooltip, Untertitel
+  - Preset-Buttons (Dieses Jahr / Letzte 30 Tage / Letzte 7 Tage)
+  - Datumsbereich-Eingabe (Von/Bis) oder Tage-Eingabe
+  - Validierung (Enddatum nicht vor Startdatum)
+  - PDF Export-Button
+  - Excel Export-Button
 
 **API-Aufrufe:**
-- Plattform-Berichts-APIs aus `reportApi.ts`
+- `handleExport()` aus `reportApi.ts` für alle Exporte
+- Endpunkte: `/reports/user-growth`, `/reports/active-users`, `/reports/checkin-trends`, `/reports/active-groups`, `/reports/message-volume`, `/reports/notification-stats`, `/reports/failed-logins`, `/reports/group-attendance`, `/reports/checkin-methods`
 
 ---
 
@@ -221,27 +234,36 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/super_admin/Educators.tsx`
 
 **Funktionalität:**
-- **Plattform-weite Erzieher-Verwaltung:**
-  - Alle Erzieher über alle Institutionen hinweg anzeigen
-  - Erzieher-Details
-  - Institutions-Zuordnung
-  - Status-Verfolgung
+- **Erzieher CRUD:**
+  - Erzieher erstellen (Name*, E-Mail*, Passwort*, Institution*, Gruppen (mehrfach), Status, Push-Token)
+  - Erzieher bearbeiten (Name, E-Mail, optionales neues Passwort, Institution, Gruppen, Status, Push-Token)
+  - Erzieher löschen
 
-- **Erzieher-Informationen:**
-  - Name, E-Mail, Telefon
-  - Institution
-  - Gruppen
-  - Status (aktiv/inaktiv)
-  - Letzter Login
+- **Spalten:**
+  - Erzieher: Name, E-Mail, Institution-Name
+  - Status: Klickbarer Badge (Aktiv/Inaktiv/Gesperrt) + Letzter Login
 
-- **Suche & Filter:**
-  - Nach Name/E-Mail suchen
-  - Nach Institution filtern
-  - Nach Status filtern
-  - Paginierung
+- **Formular-Features:**
+  - SearchableDropdown für Institution (erforderlich)
+  - SearchableDropdown für Gruppen (mehrfach auswählbar)
+  - Status-Auswahl (Aktiv/Inaktiv)
+  - Push-Token (optional, für mobile Benachrichtigungen)
+
+- **Validierung:**
+  - E-Mail-Format-Prüfung
+  - Duplikat-Prüfung (E-Mail bereits vergeben)
+
+- **Suche & Paginierung**
 
 **API-Aufrufe:**
-- Plattform-weite Benutzer-APIs
+- `fetchEducators()` - Alle Erzieher auflisten
+- `addEducator()` - Erzieher erstellen
+- `editEducator()` - Erzieher aktualisieren
+- `deleteEducator()` - Erzieher löschen
+- `fetchInstitutionen()` - Institutionen für Dropdown
+- `fetchGroups()` - Gruppen für Dropdown
+- `fetchAllUsers()` - Alle Benutzer (für Duplikat-Prüfung)
+- `updateUserStatus()` - Status-Toggle
 
 ---
 
@@ -250,27 +272,33 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/super_admin/Parents.tsx`
 
 **Funktionalität:**
-- **Plattform-weite Eltern-Verwaltung:**
-  - Alle Eltern über alle Institutionen hinweg anzeigen
-  - Eltern-Details
-  - Kinder-Zuordnungen
-  - Status-Verfolgung
+- **Eltern CRUD:**
+  - Elternteil erstellen (Name*, E-Mail*, Passwort*, Telefon, Status, Push-Token)
+  - Elternteil bearbeiten (Name, E-Mail, optionales neues Passwort, Telefon, Status, Push-Token)
+  - Elternteil löschen
 
-- **Eltern-Informationen:**
-  - Name, E-Mail, Telefon
-  - Institution
-  - Kinder
-  - Status (aktiv/inaktiv)
-  - Letzter Login
+- **Spalten:**
+  - Elternteil: Name, E-Mail, Telefon (falls vorhanden)
+  - Status: Klickbarer Badge (Aktiv/Inaktiv/Gesperrt) + Letzter Login
 
-- **Suche & Filter:**
-  - Nach Name/E-Mail suchen
-  - Nach Institution filtern
-  - Nach Status filtern
-  - Paginierung
+- **Formular-Features:**
+  - Status-Auswahl (Aktiv/Inaktiv)
+  - Push-Token (optional, für mobile Benachrichtigungen)
+  - Einzelnes Modal für Erstellen/Bearbeiten (unterscheidet anhand von editId)
+
+- **Validierung:**
+  - E-Mail-Format-Prüfung
+  - Duplikat-Prüfung (E-Mail bereits vergeben)
+
+- **Suche & Paginierung**
 
 **API-Aufrufe:**
-- Plattform-weite Benutzer-APIs
+- `fetchParents()` - Alle Eltern auflisten
+- `addParent()` - Elternteil erstellen
+- `editParent()` - Elternteil aktualisieren
+- `deleteParent()` - Elternteil löschen
+- `fetchAllUsers()` - Alle Benutzer (für Duplikat-Prüfung)
+- `updateUserStatus()` - Status-Toggle
 
 ---
 
@@ -279,26 +307,66 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/super_admin/GDPRCompliancePage.tsx`
 
 **Funktionalität:**
-- **GDPR-Dashboard:**
-  - Audit-Protokolle
-  - Ausstehende Löschungen
-  - Datenaufbewahrungs-Verwaltung
-  - Compliance-Berichte
+- **9 Tabs mit umfassender GDPR-Funktionalität:**
 
-- **Datenverwaltung:**
-  - Datenexport-Anfragen
-  - Löschungs-Anfragen
-  - Anonymisierung
-  - Tiefenbereinigung
+  **1. Audit-Logs:**
+  - Filter: Von Datum, Bis Datum, Aktion, Benutzer
+  - Tabelle: Datum, Aktion, Benutzer, Details
+  - Paginierung (10 Einträge pro Seite)
+  - Formatierte Anzeige (relative Zeit, Icons, Status-Badges)
 
-- **Compliance-Tools:**
-  - Einwilligungs-Verfolgung
-  - Datenaufbewahrungs-Fristen
-  - Audit-Trail
-  - Compliance-Berichte
+  **2. Löschungsanfragen:**
+  - Tabelle: Benutzer, Grund, Status, Erstellt am, Aktionen
+  - Genehmigen/Ablehnen-Buttons für PENDING-Status
+
+  **3. Ausstehende Löschungen:**
+  - Tabelle: Typ, Name, Institution, Löschung am, Permanente Löschung, Status
+  - Status-Badges (Kritisch/Warnung/Normal) basierend auf Tagen bis permanenter Löschung
+
+  **4. Datenexport:**
+  - Formular: User-ID eingeben
+  - JSON-Export-Download
+
+  **5. Bereinigung:**
+  - Formular: Monate zurück (1-60)
+  - Manuelle Bereinigung starten
+  - Ergebnis-Anzeige
+
+  **6. Compliance-Reports:**
+  - Compliance Score (0-100) mit visueller Anzeige
+  - Statistiken: Datenverarbeitung, Datenlöschung, Datenexport, Datenschutzbeschwerden
+  - Compliance-Empfehlungen mit Priorität (HIGH/MEDIUM/LOW)
+
+  **7. Backup-Verifizierung:**
+  - Backup-Status-Anzeige
+  - Verifizierungsergebnisse nach Typ
+  - Manuelle Verifizierung starten
+
+  **8. Privacy-by-Design:**
+  - Implementierungs-Button
+  - Status-Anzeige
+  - Liste der implementierten Maßnahmen
+
+  **9. Echtzeit-Monitoring:**
+  - Monitoring-Status (letzte Stunde)
+  - Statistiken: Verarbeitungsaktivitäten, Löschaktivitäten, Datenschutzbeschwerden
+  - Alerts mit Severity (HIGH/MEDIUM/LOW)
+  - Erkannte Anomalien
 
 **API-Aufrufe:**
-- GDPR-Verwaltungs-APIs aus `gdprApi.ts`
+- `getPendingDeletions()` - Ausstehende Löschungen
+- `getGDPRAuditLogs(100)` - Audit-Logs
+- `getRetentionPeriods()` - Aufbewahrungsfristen
+- `triggerCleanup()` - Bereinigung starten
+- `generateComplianceReport()` - Compliance-Report generieren
+- `verifyBackupIntegrity()` - Backup verifizieren
+- `implementPrivacyByDesign()` - Privacy-by-Design implementieren
+- `monitorComplianceRealTime()` - Echtzeit-Monitoring
+- `getAnomalyDetection()` - Anomalien erkennen
+- `getComplianceRecommendations()` - Empfehlungen abrufen
+- `/api/gdpr/export/{identifier}` - Datenexport
+- `/api/gdpr/requests/{id}/approve` - Anfrage genehmigen
+- `/api/gdpr/requests/{id}/reject` - Anfrage ablehnen
 
 ---
 
@@ -309,29 +377,25 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/traeger_admin/Dashboard.tsx`
 
 **Funktionalität:**
-- **Träger-Statistiken:**
-  - Gesamtanzahl Kinder (Träger-weit)
-  - Kinder >8h Anwesenheit
-  - Gesamtanzahl Erzieher
-  - Gesamtanzahl Institutionen
-  - Inaktive Benutzer (letzte 4 Wochen)
-  - Fehlgeschlagene Logins (letzte 30 Tage)
+- **Träger-Statistiken (4 StatCards):**
+  - Kinder gesamt (totalChildren)
+  - Einrichtungen (totalInstitutions)
+  - Erzieher gesamt (totalEducators)
+  - Kinder >8h (childrenOver8h)
 
-- **Schnellzugriffe:**
-  - Einrichtungen-Verwaltung
-  - Statistiken
-  - Benutzer-Verwaltung
-  - Einstellungen
+- **Warnungen (AlertCards):**
+  - Inaktive Benutzer: Zeigt Anzahl inaktiver Benutzer (letzte 4 Wochen), Button → `/traegeradmin/benutzer?filter=inactive`
+  - Fehlgeschlagene Logins: Zeigt Anzahl fehlgeschlagener Logins (letzte 30 Tage), Button → `/traegeradmin/statistiken`
 
-- **Warnungen:**
-  - Inaktive Benutzer-Warnung
-  - Fehlgeschlagene Login-Warnungen
-  - Sicherheits-Benachrichtigungen
+- **Schnellzugriffe (3 QuickLinkCards):**
+  - Einrichtungen → `/traegeradmin/einrichtungen`
+  - Benutzer → `/traegeradmin/benutzer`
+  - Statistiken → `/traegeradmin/statistiken`
 
 **API-Aufrufe:**
-- `getTraegerStats()` - Träger-Statistiken
-- `getInactiveUsers()` - Inaktive Benutzer
-- `getFailedLogins()` - Fehlgeschlagene Logins
+- `getTraegerStats(traegerId)` - Träger-Statistiken
+- `getInactiveUsers(traegerId, 4)` - Inaktive Benutzer (letzte 4 Wochen)
+- `getFailedLogins(traegerId, 30)` - Fehlgeschlagene Logins (letzte 30 Tage)
 
 ---
 
@@ -340,30 +404,23 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/traeger_admin/Einrichtungen.tsx`
 
 **Funktionalität:**
-- **Institutions-Verwaltung (Träger-weit):**
-  - Alle Institutionen im Träger anzeigen
-  - Neue Institution erstellen
-  - Institution bearbeiten
-  - Institution löschen
-  - Institutions-Details anzeigen
+- **Institution CRUD:**
+  - Institution erstellen (Name*, Adresse*)
+  - Institution bearbeiten (Name, Adresse)
+  - Institution löschen (mit Bestätigung)
 
-- **Institutions-Informationen:**
+- **Spalten:**
   - Name, Adresse
-  - Kontaktinformationen
-  - Einstellungen
-  - Statistiken pro Institution
+  - Kinder (Anzahl aus `_count.children`)
+  - Admins (Anzahl aus `_count.admins`)
 
-- **Institutions-Statistiken:**
-  - Anzahl Kinder pro Institution
-  - Anzahl Erzieher pro Institution
-  - Aktivitäts-Metriken
-
-- **Suche & Filter:**
-  - Nach Name suchen
-  - Paginierung
+- **Suche & Paginierung**
 
 **API-Aufrufe:**
-- Träger Admin Institutions-APIs
+- `getTraegerInstitutions()` - Alle Institutionen des Trägers auflisten
+- `createInstitution({ name, address })` - Institution erstellen
+- `updateInstitution(id, { name, address })` - Institution aktualisieren
+- Hinweis: Delete-Endpoint muss noch implementiert werden
 
 ---
 
@@ -372,25 +429,23 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/traeger_admin/Statistiken.tsx`
 
 **Funktionalität:**
-- **Träger-weite Statistiken:**
-  - Gesamtanzahl Kinder (alle Institutionen)
-  - Kinder >8h (alle Institutionen)
-  - Gesamtanzahl Erzieher
-  - Pro-Institution Aufschlüsselung
-  - Inaktive Benutzer
-  - Fehlgeschlagene Logins
+- **Gesamtstatistiken (3 StatCards):**
+  - Kinder: Gesamt (totalChildren), Über 8h (childrenOver8h)
+  - Einrichtungen: Gesamt (totalInstitutions)
+  - Erzieher: Gesamt (totalEducators)
 
-- **Diagramme & Visualisierungen:**
-  - Träger-weite Trends
-  - Pro-Institution Vergleich
-  - Aktivitäts-Diagramme
+- **Inaktive Benutzer:**
+  - Liste der inaktiven Benutzer (letzte 4 Wochen)
+  - Anzeige: Name, E-Mail, Rolle, Institution, Letzter Login
 
-- **Datumsbereich-Filterung:**
-  - Benutzerdefinierte Datumsbereiche
-  - Export-Funktionen
+- **Fehlgeschlagene Logins:**
+  - Liste der fehlgeschlagenen Login-Versuche (letzte 30 Tage)
+  - Anzeige: E-Mail, Datum, IP-Adresse (falls verfügbar)
 
 **API-Aufrufe:**
-- Träger Admin Statistiken-APIs
+- `getTraegerStats(traegerId)` - Träger-Statistiken
+- `getInactiveUsers(traegerId, 4)` - Inaktive Benutzer
+- `getFailedLogins(traegerId, 30)` - Fehlgeschlagene Logins
 
 ---
 
@@ -399,37 +454,24 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/traeger_admin/Benutzer.tsx`
 
 **Funktionalität:**
-- **Benutzer-Verwaltung (Träger-weit):**
-  - Alle Admins und Erzieher im Träger anzeigen
-  - Neue Benutzer erstellen (Admin, Erzieher)
-  - Benutzer-Informationen bearbeiten
-  - Benutzer löschen
-  - Benutzer sperren/entsperren
+- **Benutzer-Übersicht (nur Anzeige, kein CRUD):**
+  - Alle Benutzer des Trägers anzeigen (PARENT wird herausgefiltert)
+  - Spalten: Name, E-Mail, Rolle, Einrichtung, Status
 
-- **Benutzer-Informationen:**
-  - Name, E-Mail, Telefon
-  - Rolle (ADMIN, EDUCATOR)
-  - Institutions-Zuordnung
-  - Status (aktiv/inaktiv)
-  - Letzter Login
-
-- **Benutzer-Funktionen:**
-  - Passwort-Verwaltung
-  - Status-Updates
+- **Status-Verwaltung:**
+  - Status-Badge (Aktiv/Inaktiv) - klickbar zum Umschalten
+  - Bestätigungsdialog vor Status-Änderung
   - Sperren/Entsperren-Funktionalität
-  - Inaktive Benutzer-Identifikation
 
-- **Suche & Filter:**
-  - Nach Name/E-Mail suchen
-  - Nach Rolle filtern
-  - Nach Institution filtern
-  - Nach Status filtern
-  - Paginierung
+- **Suche & Paginierung**
 
-**Hinweis:** Eltern können nicht vom Träger-Admin verwaltet werden
+**Hinweis:** 
+- Eltern (PARENT) werden nicht angezeigt (können nicht vom Träger-Admin verwaltet werden)
+- Keine Erstellen/Bearbeiten/Löschen-Funktionalität (nur Status-Toggle)
 
 **API-Aufrufe:**
-- Träger Admin Benutzer-Verwaltungs-APIs
+- `getTraegerUsers()` - Alle Benutzer des Trägers (PARENT wird gefiltert)
+- `blockUser(traegerId, userId, isBlocked)` - Benutzer sperren/entsperren
 
 ---
 
@@ -438,14 +480,12 @@ Das App4KITAs Dashboard ist eine React-basierte Web-Anwendung mit rollenbasierte
 **Datei:** `pages/traeger_admin/Einstellungen.tsx`
 
 **Funktionalität:**
-- **Träger-Einstellungen:**
-  - Träger-Informationen
-  - Kontaktdaten
-  - Einstellungs-Konfiguration
-  - (Platzhalter für zukünftige Features)
+- **Platzhalter-Seite:**
+  - Zeigt Meldung: "Einstellungen werden in einer zukünftigen Version verfügbar sein."
+  - Keine aktuelle Funktionalität implementiert
 
 **API-Aufrufe:**
-- Träger-Einstellungs-APIs
+- Keine (Platzhalter)
 
 ---
 
@@ -1269,5 +1309,5 @@ Das Dashboard verwendet **29 API-Service-Dateien** in `services/`:
 
 ---
 
-**Letzte Aktualisierung:** Januar 2025  
+**Letzte Aktualisierung:** Oktober 2025  
 **Dokumentations-Status:** ✅ Vollständig und Akkurat
